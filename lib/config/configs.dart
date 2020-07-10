@@ -1,33 +1,21 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:yaml/yaml.dart' as yaml;
+import 'package:dart_build_script/util/yaml_utils.dart';
 
 import '../common/paths.dart';
 
 const Configs configs = const Configs();
 
 Future<void> installConfigs() async {
-  var file = File(configPath);
-  if (await file.exists()) {
-    return;
-  }
-  await file.create(recursive: true);
-  await file.writeAsString(File(configTemplatePath).readAsStringSync());
-  assert(false, '请先填写配置.');
+  var template = File(configTemplatePath).readAsStringSync();
+  var result = await YamlUtils.dumpFile(template, configPath);
+  assert(!result, '请先填写配置.');
 }
 
 class Configs {
   const Configs();
 
-  Config get config {
-    var file = File(configPath);
-    var configs = yaml.loadYaml(
-      file.readAsStringSync(),
-      sourceUrl: configPath,
-    );
-    return Config.fromJson(json.decode(json.encode(configs)));
-  }
+  Config get config => Config.fromJson(YamlUtils.loadFile(configPath));
 
   @override
   String toString() {
