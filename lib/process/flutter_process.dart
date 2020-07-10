@@ -129,7 +129,7 @@ class ApkFlutterProcess extends FlutterProcess {
     String splitPerAbi,
     bool trackWidgetCreation,
   }) {
-    var buildConfig = configs.config.androidBuildConfig;
+    var buildConfig = configs.config.apkBuildConfig;
     return super.build(
       platform,
       buildType: buildType ?? buildConfig.buildType,

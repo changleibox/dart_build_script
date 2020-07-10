@@ -38,7 +38,7 @@ class Configs {
 class Config {
   String name;
   String description;
-  AndroidBuildConfig androidBuildConfig;
+  ApkBuildConfig apkBuildConfig;
   AppStoreConfig appStoreConfig;
   DingtalkConfig dingtalkConfig;
   GitConfig gitConfig;
@@ -46,7 +46,7 @@ class Config {
   PgyConfig pgyConfig;
 
   Config({
-    this.androidBuildConfig,
+    this.apkBuildConfig,
     this.appStoreConfig,
     this.description,
     this.dingtalkConfig,
@@ -58,14 +58,13 @@ class Config {
 
   bool get gitEnable => gitConfig != null;
 
-  bool get androidEnable => androidBuildConfig != null;
+  bool get androidEnable => apkBuildConfig != null;
 
   bool get iosEnable => iosBuildConfig != null;
 
   factory Config.fromJson(Map<String, dynamic> json) {
     return Config(
-      androidBuildConfig:
-          json['android_build_config'] != null ? AndroidBuildConfig.fromJson(json['android_build_config']) : null,
+      apkBuildConfig: json['apk_build_config'] != null ? ApkBuildConfig.fromJson(json['apk_build_config']) : null,
       appStoreConfig: json['app_store_config'] != null ? AppStoreConfig.fromJson(json['app_store_config']) : null,
       description: json['description'],
       dingtalkConfig: json['dingtalk_config'] != null ? DingtalkConfig.fromJson(json['dingtalk_config']) : null,
@@ -83,8 +82,8 @@ class Config {
     data['git_enable'] = this.gitEnable;
     data['ios_enable'] = this.iosEnable;
     data['name'] = this.name;
-    if (this.androidBuildConfig != null) {
-      data['android_build_config'] = this.androidBuildConfig.toJson();
+    if (this.apkBuildConfig != null) {
+      data['apk_build_config'] = this.apkBuildConfig.toJson();
     }
     if (this.appStoreConfig != null) {
       data['app_store_config'] = this.appStoreConfig.toJson();
@@ -204,13 +203,13 @@ class BuildConfig {
   }
 }
 
-class AndroidBuildConfig extends BuildConfig {
+class ApkBuildConfig extends BuildConfig {
   bool shrink;
   String splitPerAbi;
   String targetPlatform;
   bool trackWidgetCreation;
 
-  AndroidBuildConfig({
+  ApkBuildConfig({
     String buildName,
     String buildNumber,
     String buildType,
@@ -242,8 +241,8 @@ class AndroidBuildConfig extends BuildConfig {
           treeShakeIcons: treeShakeIcons,
         );
 
-  factory AndroidBuildConfig.fromJson(Map<String, dynamic> json) {
-    return AndroidBuildConfig(
+  factory ApkBuildConfig.fromJson(Map<String, dynamic> json) {
+    return ApkBuildConfig(
       buildName: json['build_name'],
       buildNumber: json['build_number'],
       buildType: json['build_type'],
@@ -458,7 +457,7 @@ class PgyConfig {
   factory PgyConfig.fromJson(Map<String, dynamic> json) {
     return PgyConfig(
       apiKey: json['_api_key'],
-      androidAppKey: json['android_app_key'],
+      androidAppKey: json['apk_app_key'],
       buildChannelShortcut: json['build_channel_shortcut'],
       buildInstallDate: json['build_install_date'],
       buildInstallEndDate: json['build_install_end_date'],
@@ -476,7 +475,7 @@ class PgyConfig {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['_api_key'] = this.apiKey;
-    data['android_app_key'] = this.androidAppKey;
+    data['apk_app_key'] = this.androidAppKey;
     data['build_channel_shortcut'] = this.buildChannelShortcut;
     data['build_install_date'] = this.buildInstallDate;
     data['build_install_end_date'] = this.buildInstallEndDate;

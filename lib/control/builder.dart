@@ -55,7 +55,7 @@ abstract class Builder {
 
 /// 构建apk
 class ApkBuilder extends Builder {
-  final AndroidBuildConfig buildConfig;
+  final ApkBuildConfig buildConfig;
   const ApkBuilder(String name, this.buildConfig)
       : assert(name != null),
         assert(buildConfig != null),

@@ -8,7 +8,7 @@
     "password": "xxx",
     "email": "xxx"
   },
-  "android_build_config": {
+  "apk_build_config": {
     "build_type": "debug",
     "export_type": "export",
     "tree_shake_icons": true,
@@ -65,7 +65,7 @@
     "build_install_start_date": "xxx",
     "build_install_end_date": "xxx",
     "build_channel_shortcut": "xxx",
-    "android_app_aey": "xxx",
+    "apk_app_key": "xxx",
     "ios_app_key": "xxx"
   },
   "dingtalk_config": {

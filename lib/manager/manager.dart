@@ -16,7 +16,7 @@ class Manager {
 
   Future<void> build() async {
     var gitConfig = config.gitConfig;
-    var androidBuildConfig = config.androidBuildConfig;
+    var apkBuildConfig = config.apkBuildConfig;
     var iosBuildConfig = config.iosBuildConfig;
     var appStoreConfig = config.appStoreConfig;
     var pgyConfig = config.pgyConfig;
@@ -37,11 +37,11 @@ class Manager {
     }
 
     var organizers = List<Organizer>();
-    if (androidBuildConfig != null) {
+    if (apkBuildConfig != null) {
       organizers.add(Organizer(
-        ApkBuilder('android', androidBuildConfig),
+        ApkBuilder('android', apkBuildConfig),
         ApkUploader(
-          convertExportType(androidBuildConfig.exportType),
+          convertExportType(apkBuildConfig.exportType),
           pgyConfig,
           pgyConfig?.androidAppKey,
         ),
