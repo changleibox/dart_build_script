@@ -23,6 +23,7 @@ class Manager {
     var dingtalkConfig = config.dingtalkConfig;
     assert(config != null, '请添加配置文件');
 
+    await installConfigs();
     await installPaths();
 
     if (gitConfig != null) {

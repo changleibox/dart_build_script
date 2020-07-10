@@ -7,6 +7,16 @@ import '../common/paths.dart';
 
 const Configs configs = const Configs();
 
+Future<void> installConfigs() async {
+  var file = File(configPath);
+  if (await file.exists()) {
+    return;
+  }
+  await file.create(recursive: true);
+  await file.writeAsString(File(configTemplatePath).readAsStringSync());
+  assert(false, '请先填写配置.');
+}
+
 class Configs {
   const Configs();
 

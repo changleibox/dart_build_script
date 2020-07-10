@@ -10,6 +10,8 @@ final String assetsPath = path.join(projectPath, 'assets');
 
 final String configPath = path.join(assetsPath, 'configs.yaml');
 
+final String configTemplatePath = path.join(assetsPath, 'configs.json');
+
 final String descriptionPath = path.join(assetsPath, 'description.md');
 
 final String tempPath = path.join(projectPath, '.temp');
@@ -47,6 +49,7 @@ const List<String> xcconfigNames = [
 Future<void> installPaths() async {
   assert(await Directory(projectPath).exists());
   assert(await File(configPath).exists(), '请添加\'${path.join('assets', 'configs.yaml')}\'配置文件，并设置相应参数.');
+  assert(await File(configTemplatePath).exists(), '\'${path.join('assets', 'configs.json')}\'不存在.');
   assert(await File(descriptionPath).exists(), '\'${path.join('assets', 'description.md')}\'不存在.');
 
   var assetsDir = Directory(assetsPath);
