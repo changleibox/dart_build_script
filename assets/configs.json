@@ -1,0 +1,87 @@
+{
+  "name": "脚本名字",
+  "description": "脚本描述",
+  "git_config": {
+    "remote": "xxx",
+    "branch": "xxx",
+    "username": "xxx",
+    "password": "xxx",
+    "email": "xxx"
+  },
+  "android_build_config": {
+    "build_type": "debug",
+    "export_type": "export",
+    "tree_shake_icons": true,
+    "target": "xxx",
+    "flavor": "xxx",
+    "pub": true,
+    "build_number": "xxx",
+    "build_name": "xxx",
+    "split_debug_info": "xxx",
+    "obfuscate": true,
+    "dart_define": "xxx",
+    "performance_measurement_file": "xxx",
+    "shrink": true,
+    "target_platform": "xxx",
+    "split_per_abi": "xxx",
+    "track_widget_creation": true
+  },
+  "ios_build_config": {
+    "build_type": "Debug",
+    "export_type": "export",
+    "tree_shake_icons": true,
+    "target": "xxx",
+    "flavor": "xxx",
+    "pub": true,
+    "build_number": "xxx",
+    "build_name": "xxx",
+    "split_debug_info": "xxx",
+    "obfuscate": true,
+    "dart_define": "xxx",
+    "performance_measurement_file": "xxx",
+    "simulator": true,
+    "codesign": true,
+    "export_options": {
+      "debug": "xxx",
+      "release": "xxx"
+    }
+  },
+  "app_store_config": {
+    "apple_id": "xxx",
+    "type": "xxx",
+    "api_key": "xxx",
+    "api_issuer": "xxx",
+    "output_format": "normal"
+  },
+  "pgy_config": {
+    "url": "xxx",
+    "_api_key": "xxx",
+    "user_key": "xxx",
+    "build_install_type": 1,
+    "build_password": "xxx",
+    "build_update_description": "xxx",
+    "build_name": "xxx",
+    "build_install_date": 2,
+    "build_install_start_date": "xxx",
+    "build_install_end_date": "xxx",
+    "build_channel_shortcut": "xxx",
+    "android_app_aey": "xxx",
+    "ios_app_key": "xxx"
+  },
+  "dingtalk_config": {
+    "url": "xxx",
+    "secret": "xxx",
+    "access_key": "xxx",
+    "title": "xxx",
+    "is_at_all": false,
+    "at_mobiles": [
+      "xxx",
+      "xxx"
+    ],
+    "at_dingtalk_ids": [
+      "xxx",
+      "xxx"
+    ],
+    "is_auto_at": true
+  }
+}
