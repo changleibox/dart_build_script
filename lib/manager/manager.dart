@@ -15,6 +15,9 @@ class Manager {
   const Manager(this.config) : assert(config != null);
 
   Future<void> build() async {
+    await installConfigs();
+    await installPaths();
+
     var gitConfig = config.gitConfig;
     var apkBuildConfig = config.apkBuildConfig;
     var iosBuildConfig = config.iosBuildConfig;
@@ -22,9 +25,6 @@ class Manager {
     var pgyConfig = config.pgyConfig;
     var dingtalkConfig = config.dingtalkConfig;
     assert(config != null, '请添加配置文件');
-
-    await installConfigs();
-    await installPaths();
 
     if (gitConfig != null) {
       var giter = Giter(gitConfig);
