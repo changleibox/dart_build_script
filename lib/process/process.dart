@@ -15,6 +15,8 @@ abstract class IProcess {
     bool runInShell = false,
     ProcessStartMode mode = ProcessStartMode.normal,
   }) async {
+    assert(includeParentEnvironment != null);
+    assert(runInShell != null);
     var process = await Process.start(
       executable,
       arguments,

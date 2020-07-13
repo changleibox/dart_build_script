@@ -1,11 +1,12 @@
 import 'dart:io';
 
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 
 import '../common/constants.dart';
+import '../common/paths.dart';
 import '../config/configs.dart';
 import '../enums/build_platform.dart';
-import '../common/paths.dart';
 import '../process/flutter_process.dart';
 import '../process/xcodebuild_process.dart';
 import '../util/file_utils.dart';
@@ -109,7 +110,7 @@ class IOSBuilder extends Builder {
     return result;
   }
 
-  Future<ProcessResult> xcodebuildClean({String buildType}) {
+  Future<ProcessResult> xcodebuildClean({@required String buildType}) {
     return xcodebuildProcess.clean(
       workspacePath,
       targetName,
@@ -117,7 +118,7 @@ class IOSBuilder extends Builder {
     );
   }
 
-  Future<ProcessResult> xcodebuildArchive({String buildType}) {
+  Future<ProcessResult> xcodebuildArchive({@required String buildType}) {
     return xcodebuildProcess.archive(
       workspacePath,
       targetName,
@@ -126,7 +127,7 @@ class IOSBuilder extends Builder {
     );
   }
 
-  Future<ProcessResult> xcodebuildExportArchive({String buildType}) {
+  Future<ProcessResult> xcodebuildExportArchive({@required String buildType}) {
     var exportOptionsFileName = buildConfig.exportOptions.toJson()[buildType.toLowerCase()];
     var exportOptionsPath = path.join(assetsPath, exportOptionsFileName);
     assert(

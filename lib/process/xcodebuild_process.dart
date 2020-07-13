@@ -15,6 +15,7 @@ class XcodebuildProcess extends IProcess {
     String targetName, {
     String buildType = 'debug',
   }) {
+    assert(buildType != null);
     return runAsIOS('xcodebuild', [
       'clean',
       '-workspace',
@@ -32,6 +33,7 @@ class XcodebuildProcess extends IProcess {
     String archivePath, {
     String buildType = 'debug',
   }) {
+    assert(buildType != null);
     return runAsIOS('xcodebuild', [
       'archive',
       '-workspace',

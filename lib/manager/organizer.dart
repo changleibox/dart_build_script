@@ -7,7 +7,7 @@ class Organizer {
   final Uploader uploader;
   final Notifier notifier;
 
-  Organizer(this.builder, this.uploader, this.notifier) : assert(builder != null);
+  Organizer(this.builder, {this.uploader, this.notifier}) : assert(builder != null);
 
   Future<dynamic> release() async {
     var appFile = await builder.startBuild();

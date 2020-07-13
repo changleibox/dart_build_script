@@ -40,24 +40,24 @@ class Manager {
     if (apkBuildConfig != null) {
       organizers.add(Organizer(
         ApkBuilder('android', apkBuildConfig),
-        ApkUploader(
+        uploader: ApkUploader(
           convertExportType(apkBuildConfig.exportType),
           pgyConfig,
           pgyConfig?.androidAppKey,
         ),
-        notifier,
+        notifier: notifier,
       ));
     }
     if (iosBuildConfig != null) {
       organizers.add(Organizer(
         IOSBuilder('ios', iosBuildConfig),
-        IOSUploader(
+        uploader: IOSUploader(
           convertExportType(iosBuildConfig.exportType),
           pgyConfig,
           pgyConfig?.iosAppKey,
           appStoreConfig,
         ),
-        notifier,
+        notifier: notifier,
       ));
     }
     assert(organizers.isNotEmpty, '请在配置文件设置需要构建的类型');
