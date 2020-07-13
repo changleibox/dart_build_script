@@ -104,8 +104,11 @@ class IOSBuilder extends Builder {
         this.xcodebuildProcess = const XcodebuildProcess(),
         super(name, flutterProcess: const IOSFlutterProcess());
 
-  Future<ProcessResult> podInstall() async {
-    var result = await xcodebuildProcess.podInstall();
+  Future<ProcessResult> podInstall({bool verbose, bool repoUpdate}) async {
+    var result = await xcodebuildProcess.podInstall(
+      verbose: verbose,
+      repoUpdate: repoUpdate,
+    );
     await removeJcore();
     return result;
   }
@@ -155,7 +158,7 @@ class IOSBuilder extends Builder {
     var buildType = buildConfig.buildType;
     assert(buildType != null);
     buildType = buildType.toLowerCase();
-    var result = await podInstall();
+    var result = await podInstall(verbose: true, repoUpdate: false);
     if (result.exitCode == 0) {
       result = await flutterProcess.build(
         BuildPlatform.ios,
