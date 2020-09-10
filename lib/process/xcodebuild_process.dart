@@ -6,6 +6,15 @@ import 'process.dart';
 class XcodebuildProcess extends IProcess {
   const XcodebuildProcess() : super();
 
+  Future<ProcessResult> podUpdate({String libraryName}) {
+    var arguments = List<String>();
+    arguments.add('update');
+    if (libraryName != null) {
+      arguments.add(libraryName);
+    }
+    return runAsIOS('pod', arguments);
+  }
+
   Future<ProcessResult> podInstall({bool verbose, bool repoUpdate}) {
     var arguments = List<String>();
     arguments.add('install');

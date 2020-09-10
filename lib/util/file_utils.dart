@@ -12,6 +12,9 @@ class FileUtils {
     assert(old != null);
     for (var filePath in paths) {
       var file = File(filePath);
+      if (!file.existsSync()) {
+        continue;
+      }
       var content = await file.readAsString();
       if (content.contains(old)) {
         content = content.replaceAll(old, replace ?? '');

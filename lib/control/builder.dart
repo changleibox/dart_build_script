@@ -57,6 +57,7 @@ abstract class Builder {
 /// 构建apk
 class ApkBuilder extends Builder {
   final ApkBuildConfig buildConfig;
+
   const ApkBuilder(String name, this.buildConfig)
       : assert(name != null),
         assert(buildConfig != null),
@@ -103,6 +104,12 @@ class IOSBuilder extends Builder {
         assert(buildConfig != null),
         this.xcodebuildProcess = const XcodebuildProcess(),
         super(name, flutterProcess: const IOSFlutterProcess());
+
+  Future<ProcessResult> podUpdate({String libraryName}) async {
+    return await xcodebuildProcess.podUpdate(
+      libraryName: libraryName,
+    );
+  }
 
   Future<ProcessResult> podInstall({bool verbose, bool repoUpdate}) async {
     var result = await xcodebuildProcess.podInstall(
@@ -158,7 +165,10 @@ class IOSBuilder extends Builder {
     var buildType = buildConfig.buildType;
     assert(buildType != null);
     buildType = buildType.toLowerCase();
-    var result = await podInstall(verbose: true, repoUpdate: false);
+    var result = await podUpdate();
+    if (result.exitCode == 0) {
+      result = await podInstall(verbose: true, repoUpdate: false);
+    }
     if (result.exitCode == 0) {
       result = await flutterProcess.build(
         BuildPlatform.ios,
