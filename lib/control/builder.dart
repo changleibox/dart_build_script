@@ -203,12 +203,12 @@ class IOSBuilder extends Builder {
     var directory = Directory(ipaExportPath);
     var files = directory.listSync(recursive: true, followLinks: false);
     for (var file in files) {
-      if (file.path.endsWith('.ipd')) {
+      if (file.path.endsWith('.ipa')) {
         ipaFile = File(file.path);
         break;
       }
     }
-    if (result.exitCode == 0 && await ipaFile.exists()) {
+    if (result.exitCode == 0 && ipaFile?.existsSync() == true) {
       return ipaFile;
     }
     assert(false, '打包失败，请稍后重试');
