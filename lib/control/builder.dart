@@ -199,7 +199,15 @@ class IOSBuilder extends Builder {
     if (result.exitCode == 0) {
       result = await xcodebuildExportArchive(buildType: buildType);
     }
-    var ipaFile = File(path.join(ipaExportPath, '$targetName.ipa'));
+    File ipaFile;
+    var directory = Directory(ipaExportPath);
+    var files = directory.listSync(recursive: true, followLinks: false);
+    for (var file in files) {
+      if (file.path.endsWith('.ipd')) {
+        ipaFile = File(file.path);
+        break;
+      }
+    }
     if (result.exitCode == 0 && await ipaFile.exists()) {
       return ipaFile;
     }
