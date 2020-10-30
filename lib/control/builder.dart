@@ -201,11 +201,13 @@ class IOSBuilder extends Builder {
     }
     File ipaFile;
     var directory = Directory(ipaExportPath);
-    var files = directory.listSync(recursive: true, followLinks: false);
-    for (var file in files) {
-      if (file.path.endsWith('.ipa')) {
-        ipaFile = File(file.path);
-        break;
+    if (directory.existsSync()) {
+      var files = directory.listSync(recursive: true, followLinks: false);
+      for (var file in files) {
+        if (file.path.endsWith('.ipa')) {
+          ipaFile = File(file.path);
+          break;
+        }
       }
     }
     if (result.exitCode == 0 && ipaFile?.existsSync() == true) {
