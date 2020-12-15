@@ -7,7 +7,7 @@ class XcodebuildProcess extends IProcess {
   const XcodebuildProcess() : super();
 
   Future<ProcessResult> podUpdate({String libraryName}) {
-    var arguments = List<String>();
+    var arguments = <String>[];
     arguments.add('update');
     if (libraryName != null) {
       arguments.add(libraryName);
@@ -16,7 +16,7 @@ class XcodebuildProcess extends IProcess {
   }
 
   Future<ProcessResult> podInstall({bool verbose, bool repoUpdate}) {
-    var arguments = List<String>();
+    var arguments = <String>[];
     arguments.add('install');
     if (verbose == true) {
       arguments.add('--verbose');

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import '../common/paths.dart';
 import '../config/configs.dart';
 import '../control/builder.dart';
 import '../control/giter.dart';
@@ -33,7 +32,7 @@ class Manager {
       notifier = Notifier(dingtalkConfig);
     }
 
-    var organizers = List<Organizer>();
+    var organizers = <Organizer>[];
     if (apkBuildConfig != null) {
       organizers.add(Organizer(
         ApkBuilder('android', apkBuildConfig),

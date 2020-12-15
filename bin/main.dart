@@ -1,3 +1,4 @@
+import 'package:dart_build_script/common/paths.dart';
 import 'package:dart_build_script/config/configs.dart';
 import 'package:dart_build_script/manager/manager.dart';
 
