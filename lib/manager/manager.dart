@@ -15,9 +15,6 @@ class Manager {
   const Manager(this.config) : assert(config != null);
 
   Future<void> build() async {
-    await installConfigs();
-    await installPaths();
-
     var gitConfig = config.gitConfig;
     var apkBuildConfig = config.apkBuildConfig;
     var iosBuildConfig = config.iosBuildConfig;
