@@ -8,4 +8,4 @@ dependencies:
   yaml: ^2.2.1
   crypto: ^2.1.5
   dio: ^3.0.9
-  sprintf: ^4.0.2
+  sprintf: ^5.0.0
