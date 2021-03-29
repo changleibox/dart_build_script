@@ -15,6 +15,10 @@ class FlutterProcess extends IProcess {
     return runAsRoot('flutter', ['pub', 'get']);
   }
 
+  Future<ProcessResult> pubUpgrade() {
+    return runAsRoot('flutter', ['pub', 'upgrade']);
+  }
+
   Future<ProcessResult> runBuildRunner() {
     return runAsRoot('flutter', [
       'packages',

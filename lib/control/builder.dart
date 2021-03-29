@@ -28,6 +28,10 @@ abstract class Builder {
     return flutterProcess.pubGet();
   }
 
+  Future<ProcessResult> pubUpgrade() {
+    return flutterProcess.pubUpgrade();
+  }
+
   Future<ProcessResult> runBuildRunner() {
     return flutterProcess.runBuildRunner();
   }
@@ -39,6 +43,9 @@ abstract class Builder {
 
   Future<File> startBuild() async {
     var result = await clean();
+    if (result.exitCode == 0) {
+      result = await pubUpgrade();
+    }
     if (result.exitCode == 0) {
       result = await pubGet();
     }
