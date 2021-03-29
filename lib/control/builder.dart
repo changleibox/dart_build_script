@@ -2,13 +2,11 @@ import 'dart:io';
 
 import 'package:path/path.dart' as path;
 
-import '../common/constants.dart';
 import '../common/paths.dart';
 import '../config/configs.dart';
 import '../enums/build_platform.dart';
 import '../process/flutter_process.dart';
 import '../process/xcodebuild_process.dart';
-import '../util/file_utils.dart';
 
 /// 构建类
 abstract class Builder {
@@ -116,7 +114,6 @@ class IOSBuilder extends Builder {
       verbose: verbose,
       repoUpdate: repoUpdate,
     );
-    await removeJcore();
     return result;
   }
 
@@ -151,15 +148,6 @@ class IOSBuilder extends Builder {
     );
   }
 
-  Future<void> removeJcore() async {
-    var xcconfigPaths = xcconfigNames.map((e) => path.join(podsPath, e));
-    await FileUtils.replace(xcconfigPaths, jcoreLib);
-  }
-
-  bool isJcoreError(ProcessResult result) {
-    return result.stdout.contains(jcoreError) || result.stderr.contains(jcoreError);
-  }
-
   @override
   Future<File?> build() async {
     var buildType = buildConfig.buildType;
@@ -189,9 +177,6 @@ class IOSBuilder extends Builder {
     }
     if (result.exitCode == 0) {
       result = await xcodebuildClean(buildType: buildType!);
-    } else if (isJcoreError(result)) {
-      await removeJcore();
-      return build();
     }
     if (result.exitCode == 0) {
       result = await xcodebuildArchive(buildType: buildType!);

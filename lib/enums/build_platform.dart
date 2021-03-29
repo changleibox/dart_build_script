@@ -6,7 +6,7 @@ enum BuildPlatform {
   apk,
 
   /// Build an Android App Bundle file from your app.
-  appbundle,
+  appBundle,
 
   /// Build the Flutter assets directory from your app.
   bundle,
@@ -19,7 +19,7 @@ enum BuildPlatform {
   iosFramework,
 
   /// Build a macOS desktop application.
-  macos,
+  macOS,
 
   /// Build a web application bundle.
   web,
@@ -31,7 +31,7 @@ String getBuildPlatformLabel(BuildPlatform platform) {
       return 'aar';
     case BuildPlatform.apk:
       return 'apk';
-    case BuildPlatform.appbundle:
+    case BuildPlatform.appBundle:
       return 'appbundle';
     case BuildPlatform.bundle:
       return 'bundle';
@@ -39,7 +39,7 @@ String getBuildPlatformLabel(BuildPlatform platform) {
       return 'ios';
     case BuildPlatform.iosFramework:
       return 'ios-framework';
-    case BuildPlatform.macos:
+    case BuildPlatform.macOS:
       return 'macos';
     case BuildPlatform.web:
       return 'web';

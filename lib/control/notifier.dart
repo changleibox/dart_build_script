@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:sprintf/sprintf.dart';
 
-import '../config/configs.dart';
 import '../common/paths.dart';
+import '../config/configs.dart';
 import '../plugin/dingtalk_chatbot.dart';
 import '../util/date_time_utils.dart';
 import '../util/file_utils.dart';
@@ -12,8 +12,7 @@ class Notifier {
   final DingtalkConfig config;
   final DingtalkChatbot chatbot;
 
-  Notifier(this.config)
-      : this.chatbot = DingtalkChatbot(config.url!, config.secret!, config.accessKey!);
+  Notifier(this.config) : this.chatbot = DingtalkChatbot(config.url!, config.secret!, config.accessKey!);
 
   Future<Map<String, dynamic>> notify(String platform, Map<String, dynamic> data) async {
     var file = File(descriptionPath);

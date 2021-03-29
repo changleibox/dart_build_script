@@ -2,7 +2,7 @@ import 'dart:io';
 
 import '../config/configs.dart';
 import '../control/builder.dart';
-import '../control/giter.dart';
+import '../control/gitter.dart';
 import '../control/notifier.dart';
 import '../control/uploader.dart';
 import '../enums/export_type.dart';
@@ -23,8 +23,8 @@ class Manager {
     var dingtalkConfig = config!.dingtalkConfig;
 
     if (gitConfig != null) {
-      var giter = Giter(gitConfig);
-      await giter.pull();
+      var gitter = Gitter(gitConfig);
+      await gitter.pull();
     }
 
     var notifier;
