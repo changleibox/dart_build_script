@@ -1,13 +1,21 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
+/// 日期时间格式化
 class DateTimeUtils {
+  const DateTimeUtils._();
+
+  /// 转换
   static String convertDateTime(String dateTimeStr) {
-    final DateTime structTime = DateTime.parse(dateTimeStr);
-    var lastDayInMonth = DateTime(structTime.year, structTime.month + 1, 0).day;
+    final structTime = DateTime.parse(dateTimeStr);
+    final lastDayInMonth = DateTime(structTime.year, structTime.month + 1, 0).day;
     const minute = 60;
     const hour = 60 * minute;
     const day = 24 * hour;
     final month = lastDayInMonth * day;
     final year = 12 * month;
-    final int timestamp = (DateTime.now().millisecondsSinceEpoch - structTime.millisecondsSinceEpoch) ~/ 1000;
+    final timestamp = (DateTime.now().millisecondsSinceEpoch - structTime.millisecondsSinceEpoch) ~/ 1000;
     if (timestamp > year) {
       return '${timestamp ~/ year}年前';
     }

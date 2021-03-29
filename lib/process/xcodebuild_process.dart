@@ -1,13 +1,20 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
 import 'dart:io';
 
 import '../util/string_utils.dart';
 import 'process.dart';
 
+/// xcodebuild命令行
 class XcodebuildProcess extends IProcess {
+  /// 构造函数
   const XcodebuildProcess() : super();
 
+  /// pod update
   Future<ProcessResult> podUpdate({String? libraryName}) {
-    var arguments = <String>[];
+    final arguments = <String>[];
     arguments.add('update');
     if (libraryName != null) {
       arguments.add(libraryName);
@@ -15,8 +22,9 @@ class XcodebuildProcess extends IProcess {
     return runAsIOS('pod', arguments);
   }
 
+  /// pod install
   Future<ProcessResult> podInstall({bool? verbose, bool? repoUpdate}) {
-    var arguments = <String>[];
+    final arguments = <String>[];
     arguments.add('install');
     if (verbose == true) {
       arguments.add('--verbose');
@@ -27,6 +35,7 @@ class XcodebuildProcess extends IProcess {
     return runAsIOS('pod', arguments);
   }
 
+  /// xcodebuild clean
   Future<ProcessResult> clean(
     String workspacePath,
     String targetName, {
@@ -43,6 +52,7 @@ class XcodebuildProcess extends IProcess {
     ]);
   }
 
+  /// xcodebuild archive
   Future<ProcessResult> archive(
     String workspacePath,
     String targetName,
@@ -62,6 +72,7 @@ class XcodebuildProcess extends IProcess {
     ]);
   }
 
+  /// xcodebuild export archive
   Future<ProcessResult> exportArchive(
     String archivePath,
     String exportPath,

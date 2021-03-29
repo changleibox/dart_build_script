@@ -1,24 +1,34 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
 import 'dart:io';
 
 import '../config/configs.dart';
 import '../enums/build_platform.dart';
 import 'process.dart';
 
+/// flutter命令行工具
 class FlutterProcess extends IProcess {
+  /// 构造函数
   const FlutterProcess() : super();
 
+  /// flutter clean
   Future<ProcessResult> clean() {
     return runAsRoot('flutter', ['clean']);
   }
 
+  /// flutter pub get
   Future<ProcessResult> pubGet() {
     return runAsRoot('flutter', ['pub', 'get']);
   }
 
+  /// flutter pub upgrade
   Future<ProcessResult> pubUpgrade() {
     return runAsRoot('flutter', ['pub', 'upgrade']);
   }
 
+  /// flutter pub run build_runner build
   Future<ProcessResult> runBuildRunner() {
     return runAsRoot('flutter', [
       'packages',
@@ -30,6 +40,7 @@ class FlutterProcess extends IProcess {
     ]);
   }
 
+  /// flutter build
   Future<ProcessResult> build(
     BuildPlatform platform, {
     required String buildType,
@@ -50,7 +61,7 @@ class FlutterProcess extends IProcess {
     String? splitPerAbi,
     bool? trackWidgetCreation,
   }) {
-    var arguments = [
+    final arguments = [
       'build',
       getBuildPlatformLabel(platform),
       '--$buildType',
@@ -107,7 +118,9 @@ class FlutterProcess extends IProcess {
   }
 }
 
+/// 构建apk命令行
 class ApkFlutterProcess extends FlutterProcess {
+  /// 构造函数
   const ApkFlutterProcess() : super();
 
   @override
@@ -131,7 +144,7 @@ class ApkFlutterProcess extends FlutterProcess {
     String? splitPerAbi,
     bool? trackWidgetCreation,
   }) {
-    var buildConfig = configs.config.apkBuildConfig;
+    final buildConfig = configs.config.apkBuildConfig;
     return super.build(
       platform,
       buildType: buildType ?? buildConfig!.buildType!,
@@ -153,7 +166,9 @@ class ApkFlutterProcess extends FlutterProcess {
   }
 }
 
+/// 构建iOS命令行
 class IOSFlutterProcess extends FlutterProcess {
+  /// 构造函数
   const IOSFlutterProcess() : super();
 
   @override
@@ -177,7 +192,7 @@ class IOSFlutterProcess extends FlutterProcess {
     String? splitPerAbi,
     bool? trackWidgetCreation,
   }) {
-    var buildConfig = configs.config.iosBuildConfig;
+    final buildConfig = configs.config.iosBuildConfig;
     return super.build(
       platform,
       buildType: buildType ?? buildConfig!.buildType!,

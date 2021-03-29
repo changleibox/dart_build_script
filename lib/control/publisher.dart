@@ -1,12 +1,22 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
 import 'dart:io';
 
 import '../config/configs.dart';
 import '../process/xcrun_process.dart';
 
+/// 发布器
 abstract class Publisher {
+  /// 构造函数
+  const Publisher();
+
+  /// 发布
   Future<ProcessResult?> publish(File file);
 }
 
+/// apk发布器
 class ApkPublisher extends Publisher {
   @override
   Future<ProcessResult?> publish(File file) async {
@@ -15,11 +25,16 @@ class ApkPublisher extends Publisher {
   }
 }
 
+/// iOS发布器
 class IOSPublisher extends Publisher {
-  final AppStoreConfig config;
-  final XcrunProcess process;
+  /// 构造函数
+  const IOSPublisher(this.config) : process = const XcrunProcess();
 
-  IOSPublisher(this.config) : this.process = XcrunProcess();
+  /// appStore配置
+  final AppStoreConfig config;
+
+  /// xcrun命令行工具
+  final XcrunProcess process;
 
   @override
   Future<ProcessResult> publish(File file) async {

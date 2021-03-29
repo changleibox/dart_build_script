@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -5,20 +9,9 @@ import 'package:dio/dio.dart';
 import '../enums/install_type.dart';
 import 'std_progress.dart';
 
+/// 蒲公英智能机器人
 class DandelionChatbot {
-  final String url;
-  final String apiKey;
-  final String userKey;
-  final InstallType buildInstallType;
-  final String buildPassword;
-  final String? buildUpdateDescription;
-  final String? buildName;
-  final int? buildInstallDate;
-  final String? buildInstallStartDate;
-  final String? buildInstallEndDate;
-  final String? buildChannelShortcut;
-  final String? appKey;
-
+  /// 构造函数
   DandelionChatbot(
     this.url,
     this.apiKey,
@@ -34,9 +27,46 @@ class DandelionChatbot {
     this.appKey,
   });
 
+  /// url
+  final String url;
+
+  /// apiKey
+  final String apiKey;
+
+  /// userKey
+  final String userKey;
+
+  /// buildInstallType
+  final InstallType buildInstallType;
+
+  /// buildPassword
+  final String buildPassword;
+
+  /// buildUpdateDescription
+  final String? buildUpdateDescription;
+
+  /// buildName
+  final String? buildName;
+
+  /// buildInstallDate
+  final int? buildInstallDate;
+
+  /// buildInstallStartDate
+  final String? buildInstallStartDate;
+
+  /// buildInstallEndDate
+  final String? buildInstallEndDate;
+
+  /// buildChannelShortcut
+  final String? buildChannelShortcut;
+
+  /// appKey
+  final String? appKey;
+
+  /// 上传到蒲公英
   Future<Map<String, dynamic>> upload(File file) async {
-    var dio = Dio();
-    var data = Map<String, dynamic>();
+    final dio = Dio();
+    final data = <String, dynamic>{};
     data['_api_key'] = apiKey;
     data['userKey'] = userKey;
     data['buildInstallType'] = getInstallTypeValue(buildInstallType);
@@ -63,13 +93,13 @@ class DandelionChatbot {
       data['appKey'] = appKey;
     }
     data['file'] = MultipartFile.fromFileSync(file.path);
-    var response = await dio.post(
+    final response = await dio.post<dynamic>(
       url,
       data: FormData.fromMap(data),
       onSendProgress: (count, total) {
         StdProgress.write(count, total);
       },
     );
-    return response.data;
+    return response.data as Map<String, dynamic>;
   }
 }

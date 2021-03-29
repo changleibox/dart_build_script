@@ -1,8 +1,16 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
 import 'dart:io';
 
 import 'package:path/path.dart';
 
+/// 文件工具
 class FileUtils {
+  const FileUtils._();
+
+  /// 替换文件内容
   static Future<void> replace(
     Iterable<String> paths,
     String old, {
@@ -10,7 +18,7 @@ class FileUtils {
   }) async {
     assert(paths.isNotEmpty);
     for (var filePath in paths) {
-      var file = File(filePath);
+      final file = File(filePath);
       if (!file.existsSync()) {
         continue;
       }
@@ -22,6 +30,7 @@ class FileUtils {
     }
   }
 
+  /// 获取格式化的文件大小
   static String convertFukeSize(int? size) {
     if (size == null) {
       return '0 Byte';
@@ -35,38 +44,45 @@ class FileUtils {
     if (size >= tb) {
       return '${(size / tb).toStringAsFixed(2)} TB';
     }
-    if (size >= gb) return '${(size / gb).toStringAsFixed(2)} GB';
-    if (size >= mb) return '${(size / mb).toStringAsFixed(2)} MB';
-    if (size >= kb) return '${(size / kb).toStringAsFixed(2)} KB';
+    if (size >= gb) {
+      return '${(size / gb).toStringAsFixed(2)} GB';
+    }
+    if (size >= mb) {
+      return '${(size / mb).toStringAsFixed(2)} MB';
+    }
+    if (size >= kb) {
+      return '${(size / kb).toStringAsFixed(2)} KB';
+    }
     return '$size Byte';
   }
 
+  /// 复制文件
   static Future<String> copy(String sourcePath, String targetPath) async {
     if (FileSystemEntity.isFileSync(sourcePath)) {
       if (FileSystemEntity.isDirectorySync(targetPath)) {
-        var directory = Directory(targetPath);
+        final directory = Directory(targetPath);
         if (!directory.existsSync()) {
           directory.createSync(recursive: true);
         }
         targetPath = join(targetPath, basename(sourcePath));
       }
-      var newFile = File(sourcePath).copySync(targetPath);
+      final newFile = File(sourcePath).copySync(targetPath);
       return newFile.path;
     } else {
-      var targetDir = Directory(targetPath);
+      final targetDir = Directory(targetPath);
       if (!targetDir.existsSync()) {
         targetDir.createSync(recursive: true);
       }
-      var sourceDir = Directory(sourcePath);
-      var exportDir = Directory(join(targetPath, basename(sourceDir.path)));
+      final sourceDir = Directory(sourcePath);
+      final exportDir = Directory(join(targetPath, basename(sourceDir.path)));
       if (exportDir.existsSync()) {
         exportDir.deleteSync(recursive: true);
       }
       exportDir.createSync(recursive: true);
-      var fileSystemEntities = sourceDir.listSync(recursive: false);
+      final fileSystemEntities = sourceDir.listSync(recursive: false);
       for (var fileSystemEntity in fileSystemEntities) {
-        var filePath = fileSystemEntity.path;
-        copy(filePath, exportDir.path);
+        final filePath = fileSystemEntity.path;
+        await copy(filePath, exportDir.path);
       }
       return exportDir.path;
     }

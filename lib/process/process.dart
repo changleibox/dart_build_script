@@ -1,11 +1,18 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
 import 'dart:async';
 import 'dart:io';
 
 import '../common/paths.dart';
 
+/// 命令行工具
 abstract class IProcess {
+  /// 构造函数
   const IProcess();
 
+  /// 运行在当前目录
   Future<ProcessResult> run(
     String executable,
     List<String> arguments, {
@@ -15,7 +22,7 @@ abstract class IProcess {
     bool runInShell = false,
     ProcessStartMode mode = ProcessStartMode.normal,
   }) async {
-    var process = await Process.start(
+    final process = await Process.start(
       executable,
       arguments,
       workingDirectory: workingDirectory,
@@ -24,20 +31,21 @@ abstract class IProcess {
       runInShell: runInShell,
       mode: mode,
     );
-    var stdoutBuffer = StringBuffer();
+    final stdoutBuffer = StringBuffer();
     process.stdout.transform(systemEncoding.decoder).listen((event) {
       stdout.write(event);
       stdoutBuffer.write(event);
     });
-    var stderrBuffer = StringBuffer();
+    final stderrBuffer = StringBuffer();
     process.stderr.transform(systemEncoding.decoder).listen((event) {
       stderr.write(event);
       stderrBuffer.write(event);
     });
-    var exitCode = await process.exitCode;
+    final exitCode = await process.exitCode;
     return ProcessResult(process.pid, exitCode, stdoutBuffer.toString(), stderrBuffer.toString());
   }
 
+  /// 运行在根目录
   Future<ProcessResult> runAsRoot(
     String executable,
     List<String> arguments,
@@ -45,6 +53,7 @@ abstract class IProcess {
     return run(executable, arguments, workingDirectory: rootPath);
   }
 
+  /// 运行在ios目录
   Future<ProcessResult> runAsIOS(
     String executable,
     List<String> arguments,

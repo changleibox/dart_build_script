@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
+/// 构建的平台
 enum BuildPlatform {
   /// Build a repository containing an AAR and a POM file.
   aar,
@@ -25,6 +30,7 @@ enum BuildPlatform {
   web,
 }
 
+/// 获取构建平台名称
 String getBuildPlatformLabel(BuildPlatform platform) {
   switch (platform) {
     case BuildPlatform.aar:

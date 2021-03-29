@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
@@ -5,21 +9,17 @@ import 'package:dio/dio.dart';
 
 import '../util/parse_utils.dart';
 
+/// 钉钉智能机器人
 class DingtalkChatbot {
-  final String baseUrl;
-  final String secret;
-  final String accessKey;
-
-  late Uri _uri;
-
+  /// 构造函数
   DingtalkChatbot(this.baseUrl, this.secret, this.accessKey) {
-    var timestamp = DateTime.now().millisecondsSinceEpoch;
-    var stringToSign = '$timestamp\n$secret';
-    var hmacCode = Hmac(sha256, utf8.encode(secret)).convert(utf8.encode(stringToSign));
-    var sign = quotePlus(base64.encode(hmacCode.bytes));
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    final stringToSign = '$timestamp\n$secret';
+    final hmacCode = Hmac(sha256, utf8.encode(secret)).convert(utf8.encode(stringToSign));
+    final sign = quotePlus(base64.encode(hmacCode.bytes));
 
-    _uri = Uri.parse(this.baseUrl).replace(
-      queryParameters: {
+    _uri = Uri.parse(baseUrl).replace(
+      queryParameters: <String, dynamic>{
         'access_token': accessKey,
         'timestamp': timestamp.toString(),
         'sign': sign,
@@ -27,23 +27,36 @@ class DingtalkChatbot {
     );
   }
 
+  /// baseUrl
+  final String baseUrl;
+
+  /// secret
+  final String secret;
+
+  /// accessKey
+  final String accessKey;
+
+  late Uri _uri;
+
+  /// 发送消息
   Future<Map<String, dynamic>> sendMessage(Map<String, dynamic> data) async {
     assert(data.isNotEmpty);
-    var options = BaseOptions(
+    final options = BaseOptions(
       baseUrl: baseUrl,
       headers: <String, dynamic>{
         'Content-Type': 'application/json',
         'Charset': 'UTF-8',
       },
     );
-    var dio = Dio(options);
-    var response = await dio.postUri(
+    final dio = Dio(options);
+    final response = await dio.postUri<dynamic>(
       _uri,
       data: json.encode(data),
     );
-    return response.data;
+    return response.data as Map<String, dynamic>;
   }
 
+  /// 发送markdown
   Future<Map<String, dynamic>> sendMarkdown(
     String title,
     String text, {
@@ -52,10 +65,10 @@ class DingtalkChatbot {
     List<String>? atDingtalkIds,
     bool isAutoAt = true,
   }) {
-    var data = <String, dynamic>{
+    final data = <String, dynamic>{
       'msgtype': 'markdown',
       'markdown': {'title': title, 'text': text},
-      'at': {},
+      'at': <String, dynamic>{},
     };
     if (isAtAll) {
       data['at']['isAtAll'] = isAtAll;

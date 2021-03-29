@@ -1,9 +1,20 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
+/// 蒲公英安装类型
 enum InstallType {
+  /// 公共
   public,
+
+  /// 需要密码
   password,
+
+  /// 邀请才能安装
   invite,
 }
 
+/// 转换
 InstallType? convertInstallType(int value) {
   switch (value) {
     case 1:
@@ -17,6 +28,7 @@ InstallType? convertInstallType(int value) {
   return null;
 }
 
+/// 转换
 int getInstallTypeValue(InstallType installType) {
   switch (installType) {
     case InstallType.public:

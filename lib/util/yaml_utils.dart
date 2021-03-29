@@ -1,25 +1,33 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:yaml/yaml.dart';
 
+/// 处理yaml文件
 class YamlUtils {
+  /// 读取内容
   static Map<String, dynamic> loadFile(String path) {
-    var file = File(path);
-    var configs = loadYaml(
+    final file = File(path);
+    final dynamic configs = loadYaml(
       file.readAsStringSync(),
       sourceUrl: Uri.file(path),
     );
-    return json.decode(json.encode(configs));
+    return json.decode(json.encode(configs)) as Map<String, dynamic>;
   }
 
+  /// 写文件
   static Future<bool> dumpFile(String jsonStr, String target) async {
-    return await dump(json.decode(jsonStr), target);
+    return await dump(json.decode(jsonStr) as Map<String, dynamic>, target);
   }
 
-  static Future<bool> dump(Map data, String target) async {
-    var file = File(target);
-    if (await file.exists()) {
+  /// 写文件
+  static Future<bool> dump(Map<String, dynamic> data, String target) async {
+    final file = File(target);
+    if (file.existsSync()) {
       return false;
     }
     await file.create(recursive: true);
@@ -27,16 +35,17 @@ class YamlUtils {
     return true;
   }
 
+  /// 转换
   static String convert(Map data, [String prefix = '', String intent = '  ']) {
     return _convert(data, prefix, intent).trim();
   }
 
   static String _convert(dynamic data, [String prefix = '', String intent = '  ']) {
-    var buffer = StringBuffer();
+    final buffer = StringBuffer();
     if (data is Map) {
       for (var key in data.keys) {
         buffer.writeln();
-        var value = data[key];
+        final dynamic value = data[key];
         buffer.write(prefix);
         buffer.write(['$key:', _convertValue(value, prefix, intent)].join(' '));
       }

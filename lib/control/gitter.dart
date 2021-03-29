@@ -1,19 +1,29 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
 import 'dart:io';
 
 import '../common/paths.dart';
 import '../config/configs.dart';
 import '../process/git_process.dart';
 
+/// git工具
 class Gitter {
+  /// 构造函数
+  Gitter(this.config) : gitProcess = GitProcess(rootPath);
+
+  /// git命令行工具
   final GitProcess gitProcess;
+
+  /// git配置
   final GitConfig config;
 
-  Gitter(this.config) : this.gitProcess = GitProcess(rootPath);
-
+  /// git pull
   Future<ProcessResult?> pull() async {
     var result = await gitProcess.init();
     if (result.exitCode == 0) {
-      var rootDir = Directory(rootPath);
+      final rootDir = Directory(rootPath);
       if (rootDir.existsSync() && !File(yamlPath).existsSync()) {
         rootDir.deleteSync(recursive: true);
       }

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021 CHANGLEI. All rights reserved.
+ */
+
 import 'dart:io';
 
 import '../common/paths.dart';
@@ -8,14 +12,24 @@ import '../plugin/dandelion_chatbot.dart';
 import '../util/file_utils.dart';
 import 'publisher.dart';
 
+/// 上传器
 abstract class Uploader {
-  final ExportType exportType;
-  final PgyConfig? pgyConfig;
-  final String? appKey;
-  final Publisher? publisher;
-
+  /// 构造函数
   Uploader(this.exportType, this.pgyConfig, this.publisher, {this.appKey});
 
+  /// 导出类型
+  final ExportType exportType;
+
+  /// 蒲公英配置
+  final PgyConfig? pgyConfig;
+
+  /// 蒲公英appKey
+  final String? appKey;
+
+  /// 发布器
+  final Publisher? publisher;
+
+  /// 上传
   Future<dynamic> upload(File file) async {
     switch (exportType) {
       case ExportType.export:
@@ -33,12 +47,14 @@ abstract class Uploader {
     }
   }
 
+  /// 导出到制定目录
   Future<String> export(File file) async {
     return FileUtils.copy(file.parent.path, outputsPath);
   }
 
+  /// 上传到蒲公英
   Future<Map<String, dynamic>> uploadToPgy(File file) async {
-    var chatbot = DandelionChatbot(
+    final chatbot = DandelionChatbot(
       pgyConfig!.url!,
       pgyConfig!.apiKey!,
       pgyConfig!.userKey!,
@@ -51,18 +67,21 @@ abstract class Uploader {
       buildInstallEndDate: pgyConfig!.buildInstallEndDate,
       appKey: appKey!,
     );
-    var result = await chatbot.upload(file);
+    final result = await chatbot.upload(file);
     result['apiKey'] = pgyConfig!.apiKey;
     result['buildPassword'] = pgyConfig!.buildPassword;
     return result;
   }
 
+  /// 发布
   Future<ProcessResult?> publish(File file) async {
     return await publisher?.publish(file);
   }
 }
 
+/// apk上传器
 class ApkUploader extends Uploader {
+  /// 构造函数
   ApkUploader(
     ExportType exportType,
     PgyConfig? pgyConfig,
@@ -75,7 +94,9 @@ class ApkUploader extends Uploader {
         );
 }
 
+/// iOS上传器
 class IOSUploader extends Uploader {
+  /// 构造函数
   IOSUploader(
     ExportType exportType,
     PgyConfig? pgyConfig,
