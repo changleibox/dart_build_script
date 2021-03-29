@@ -9,18 +9,18 @@ import '../enums/export_type.dart';
 import 'organizer.dart';
 
 class Manager {
-  final Config config;
+  final Config? config;
 
-  const Manager(this.config) : assert(config != null);
+  const Manager(this.config);
 
   Future<void> build() async {
-    var gitConfig = config.gitConfig;
-    var apkBuildConfig = config.apkBuildConfig;
-    var iosBuildConfig = config.iosBuildConfig;
-    var appStoreConfig = config.appStoreConfig;
-    var pgyConfig = config.pgyConfig;
-    var dingtalkConfig = config.dingtalkConfig;
     assert(config != null, '请添加配置文件');
+    var gitConfig = config!.gitConfig;
+    var apkBuildConfig = config!.apkBuildConfig;
+    var iosBuildConfig = config!.iosBuildConfig;
+    var appStoreConfig = config!.appStoreConfig;
+    var pgyConfig = config!.pgyConfig;
+    var dingtalkConfig = config!.dingtalkConfig;
 
     if (gitConfig != null) {
       var giter = Giter(gitConfig);
@@ -37,7 +37,7 @@ class Manager {
       organizers.add(Organizer(
         ApkBuilder('android', apkBuildConfig),
         uploader: ApkUploader(
-          convertExportType(apkBuildConfig.exportType),
+          convertExportType(apkBuildConfig.exportType!)!,
           pgyConfig,
           pgyConfig?.androidAppKey,
         ),
@@ -48,7 +48,7 @@ class Manager {
       organizers.add(Organizer(
         IOSBuilder('ios', iosBuildConfig),
         uploader: IOSUploader(
-          convertExportType(iosBuildConfig.exportType),
+          convertExportType(iosBuildConfig.exportType!)!,
           pgyConfig,
           pgyConfig?.iosAppKey,
           appStoreConfig,

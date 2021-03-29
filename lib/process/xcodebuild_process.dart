@@ -6,7 +6,7 @@ import 'process.dart';
 class XcodebuildProcess extends IProcess {
   const XcodebuildProcess() : super();
 
-  Future<ProcessResult> podUpdate({String libraryName}) {
+  Future<ProcessResult> podUpdate({String? libraryName}) {
     var arguments = <String>[];
     arguments.add('update');
     if (libraryName != null) {
@@ -15,7 +15,7 @@ class XcodebuildProcess extends IProcess {
     return runAsIOS('pod', arguments);
   }
 
-  Future<ProcessResult> podInstall({bool verbose, bool repoUpdate}) {
+  Future<ProcessResult> podInstall({bool? verbose, bool? repoUpdate}) {
     var arguments = <String>[];
     arguments.add('install');
     if (verbose == true) {
@@ -32,7 +32,6 @@ class XcodebuildProcess extends IProcess {
     String targetName, {
     String buildType = 'debug',
   }) {
-    assert(buildType != null);
     return runAsIOS('xcodebuild', [
       'clean',
       '-workspace',
@@ -40,7 +39,7 @@ class XcodebuildProcess extends IProcess {
       '-scheme',
       targetName,
       '-configuration',
-      capitalize(buildType),
+      capitalize(buildType)!,
     ]);
   }
 
@@ -50,7 +49,6 @@ class XcodebuildProcess extends IProcess {
     String archivePath, {
     String buildType = 'debug',
   }) {
-    assert(buildType != null);
     return runAsIOS('xcodebuild', [
       'archive',
       '-workspace',
@@ -58,7 +56,7 @@ class XcodebuildProcess extends IProcess {
       '-scheme',
       targetName,
       '-configuration',
-      capitalize(buildType),
+      capitalize(buildType)!,
       '-archivePath',
       archivePath,
     ]);

@@ -11,7 +11,7 @@ class GitProcess extends IProcess {
     return run('git', ['config', '--global', 'credential.helper', 'store']);
   }
 
-  Future<ProcessResult> configUser(String username, String password, {String email}) async {
+  Future<ProcessResult> configUser(String username, String password, {String? email}) async {
     var result = await run('git', ['config', '--global', 'user.name', username]);
     if (result.exitCode == 0) {
       result = await run('git', ['config', '--global', 'user.password', password]);

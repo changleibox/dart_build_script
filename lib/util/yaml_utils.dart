@@ -4,11 +4,11 @@ import 'dart:io';
 import 'package:yaml/yaml.dart';
 
 class YamlUtils {
-  static Map loadFile(String path) {
+  static Map<String, dynamic> loadFile(String path) {
     var file = File(path);
     var configs = loadYaml(
       file.readAsStringSync(),
-      sourceUrl: path,
+      sourceUrl: Uri.file(path),
     );
     return json.decode(json.encode(configs));
   }

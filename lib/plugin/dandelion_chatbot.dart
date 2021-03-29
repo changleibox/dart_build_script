@@ -11,13 +11,13 @@ class DandelionChatbot {
   final String userKey;
   final InstallType buildInstallType;
   final String buildPassword;
-  final String buildUpdateDescription;
-  final String buildName;
-  final int buildInstallDate;
-  final String buildInstallStartDate;
-  final String buildInstallEndDate;
-  final String buildChannelShortcut;
-  final String appKey;
+  final String? buildUpdateDescription;
+  final String? buildName;
+  final int? buildInstallDate;
+  final String? buildInstallStartDate;
+  final String? buildInstallEndDate;
+  final String? buildChannelShortcut;
+  final String? appKey;
 
   DandelionChatbot(
     this.url,
@@ -32,11 +32,7 @@ class DandelionChatbot {
     this.buildInstallEndDate,
     this.buildChannelShortcut,
     this.appKey,
-  })  : assert(url != null),
-        assert(apiKey != null),
-        assert(userKey != null),
-        assert(buildInstallType != null),
-        assert(buildPassword != null);
+  });
 
   Future<Map<String, dynamic>> upload(File file) async {
     var dio = Dio();

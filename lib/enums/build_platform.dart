@@ -29,29 +29,19 @@ String getBuildPlatformLabel(BuildPlatform platform) {
   switch (platform) {
     case BuildPlatform.aar:
       return 'aar';
-      break;
     case BuildPlatform.apk:
       return 'apk';
-      break;
     case BuildPlatform.appbundle:
       return 'appbundle';
-      break;
     case BuildPlatform.bundle:
       return 'bundle';
-      break;
     case BuildPlatform.ios:
       return 'ios';
-      break;
     case BuildPlatform.iosFramework:
       return 'ios-framework';
-      break;
     case BuildPlatform.macos:
       return 'macos';
-      break;
     case BuildPlatform.web:
       return 'web';
-      break;
   }
-  assert(false, '未定义的platform：$platform');
-  return null;
 }

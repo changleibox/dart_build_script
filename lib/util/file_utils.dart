@@ -6,10 +6,9 @@ class FileUtils {
   static Future<void> replace(
     Iterable<String> paths,
     String old, {
-    String replace,
+    String? replace,
   }) async {
-    assert(paths != null && paths.isNotEmpty);
-    assert(old != null);
+    assert(paths.isNotEmpty);
     for (var filePath in paths) {
       var file = File(filePath);
       if (!file.existsSync()) {
@@ -23,7 +22,7 @@ class FileUtils {
     }
   }
 
-  static String convertFukeSize(int size) {
+  static String convertFukeSize(int? size) {
     if (size == null) {
       return '0 Byte';
     }

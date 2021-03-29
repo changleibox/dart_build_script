@@ -1,5 +1,5 @@
 /// 首字母转成大写
-String capitalize(String s) {
+String? capitalize(String? s) {
   if (s == null || s.isEmpty) {
     return s;
   }

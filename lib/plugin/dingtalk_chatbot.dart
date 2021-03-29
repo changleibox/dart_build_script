@@ -10,7 +10,7 @@ class DingtalkChatbot {
   final String secret;
   final String accessKey;
 
-  Uri _uri;
+  late Uri _uri;
 
   DingtalkChatbot(this.baseUrl, this.secret, this.accessKey) {
     var timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -28,7 +28,7 @@ class DingtalkChatbot {
   }
 
   Future<Map<String, dynamic>> sendMessage(Map<String, dynamic> data) async {
-    assert(data != null && data.isNotEmpty);
+    assert(data.isNotEmpty);
     var options = BaseOptions(
       baseUrl: baseUrl,
       headers: <String, dynamic>{
@@ -48,14 +48,10 @@ class DingtalkChatbot {
     String title,
     String text, {
     bool isAtAll = false,
-    List<String> atMobiles,
-    List<String> atDingtalkIds,
+    List<String>? atMobiles,
+    List<String>? atDingtalkIds,
     bool isAutoAt = true,
   }) {
-    assert(title != null);
-    assert(text != null);
-    assert(isAtAll != null);
-    assert(isAutoAt != null);
     var data = <String, dynamic>{
       'msgtype': 'markdown',
       'markdown': {'title': title, 'text': text},

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 
 import '../common/constants.dart';
@@ -16,9 +15,8 @@ abstract class Builder {
   final String platform;
   final FlutterProcess flutterProcess;
 
-  const Builder(this.platform, {FlutterProcess flutterProcess})
-      : assert(platform != null),
-        this.flutterProcess = flutterProcess ?? const FlutterProcess();
+  const Builder(this.platform, {FlutterProcess? flutterProcess})
+      : this.flutterProcess = flutterProcess ?? const FlutterProcess();
 
   Future<ProcessResult> clean() {
     return flutterProcess.clean();
@@ -39,9 +37,9 @@ abstract class Builder {
   /// 以[buildType]构建一个发布包
   ///
   /// 返回发布包的路径
-  Future<File> build();
+  Future<File?> build();
 
-  Future<File> startBuild() async {
+  Future<File?> startBuild() async {
     var result = await clean();
     if (result.exitCode == 0) {
       result = await pubUpgrade();
@@ -65,18 +63,15 @@ abstract class Builder {
 class ApkBuilder extends Builder {
   final ApkBuildConfig buildConfig;
 
-  const ApkBuilder(String name, this.buildConfig)
-      : assert(name != null),
-        assert(buildConfig != null),
-        super(name, flutterProcess: const ApkFlutterProcess());
+  const ApkBuilder(String name, this.buildConfig) : super(name, flutterProcess: const ApkFlutterProcess());
 
   @override
-  Future<File> build() async {
+  Future<File?> build() async {
     var buildType = buildConfig.buildType;
-    assert(buildType != null);
+    assert(buildType != null, '请配置buildType');
     var result = await flutterProcess.build(
       BuildPlatform.apk,
-      buildType: buildType,
+      buildType: buildType!,
       treeShakeIcons: buildConfig.treeShakeIcons,
       target: buildConfig.target,
       flavor: buildConfig.flavor,
@@ -107,18 +102,16 @@ class IOSBuilder extends Builder {
   final IosBuildConfig buildConfig;
 
   const IOSBuilder(String name, this.buildConfig)
-      : assert(name != null),
-        assert(buildConfig != null),
-        this.xcodebuildProcess = const XcodebuildProcess(),
+      : this.xcodebuildProcess = const XcodebuildProcess(),
         super(name, flutterProcess: const IOSFlutterProcess());
 
-  Future<ProcessResult> podUpdate({String libraryName}) async {
+  Future<ProcessResult> podUpdate({String? libraryName}) async {
     return await xcodebuildProcess.podUpdate(
       libraryName: libraryName,
     );
   }
 
-  Future<ProcessResult> podInstall({bool verbose, bool repoUpdate}) async {
+  Future<ProcessResult> podInstall({bool? verbose, bool? repoUpdate}) async {
     var result = await xcodebuildProcess.podInstall(
       verbose: verbose,
       repoUpdate: repoUpdate,
@@ -127,7 +120,7 @@ class IOSBuilder extends Builder {
     return result;
   }
 
-  Future<ProcessResult> xcodebuildClean({@required String buildType}) {
+  Future<ProcessResult> xcodebuildClean({required String buildType}) {
     return xcodebuildProcess.clean(
       workspacePath,
       targetName,
@@ -135,7 +128,7 @@ class IOSBuilder extends Builder {
     );
   }
 
-  Future<ProcessResult> xcodebuildArchive({@required String buildType}) {
+  Future<ProcessResult> xcodebuildArchive({required String buildType}) {
     return xcodebuildProcess.archive(
       workspacePath,
       targetName,
@@ -144,11 +137,11 @@ class IOSBuilder extends Builder {
     );
   }
 
-  Future<ProcessResult> xcodebuildExportArchive({@required String buildType}) {
-    var exportOptionsFileName = buildConfig.exportOptions.toJson()[buildType.toLowerCase()];
+  Future<ProcessResult> xcodebuildExportArchive({required String buildType}) {
+    var exportOptionsFileName = buildConfig.exportOptions?.toJson()[buildType.toLowerCase()];
     var exportOptionsPath = path.join(assetsPath, exportOptionsFileName);
     assert(
-      exportOptionsPath != null && File(exportOptionsPath).existsSync(),
+      File(exportOptionsPath).existsSync(),
       '请在配置文件设置，并且添加\'${path.join('assets', exportOptionsFileName)}\'文件.',
     );
     return xcodebuildProcess.exportArchive(
@@ -168,10 +161,10 @@ class IOSBuilder extends Builder {
   }
 
   @override
-  Future<File> build() async {
+  Future<File?> build() async {
     var buildType = buildConfig.buildType;
-    assert(buildType != null);
-    buildType = buildType.toLowerCase();
+    buildType = buildType?.toLowerCase();
+    assert(buildType != null, '请配置buildType');
     var result = await podUpdate();
     if (result.exitCode == 0) {
       result = await podInstall(verbose: true, repoUpdate: false);
@@ -179,7 +172,7 @@ class IOSBuilder extends Builder {
     if (result.exitCode == 0) {
       result = await flutterProcess.build(
         BuildPlatform.ios,
-        buildType: buildType,
+        buildType: buildType!,
         treeShakeIcons: buildConfig.treeShakeIcons,
         target: buildConfig.target,
         flavor: buildConfig.flavor,
@@ -195,18 +188,18 @@ class IOSBuilder extends Builder {
       );
     }
     if (result.exitCode == 0) {
-      result = await xcodebuildClean(buildType: buildType);
+      result = await xcodebuildClean(buildType: buildType!);
     } else if (isJcoreError(result)) {
       await removeJcore();
       return build();
     }
     if (result.exitCode == 0) {
-      result = await xcodebuildArchive(buildType: buildType);
+      result = await xcodebuildArchive(buildType: buildType!);
     }
     if (result.exitCode == 0) {
-      result = await xcodebuildExportArchive(buildType: buildType);
+      result = await xcodebuildExportArchive(buildType: buildType!);
     }
-    File ipaFile;
+    File? ipaFile;
     var directory = Directory(ipaExportPath);
     if (directory.existsSync()) {
       var files = directory.listSync(recursive: true, followLinks: false);

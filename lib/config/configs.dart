@@ -24,14 +24,14 @@ class Configs {
 }
 
 class Config {
-  String name;
-  String description;
-  ApkBuildConfig apkBuildConfig;
-  AppStoreConfig appStoreConfig;
-  DingtalkConfig dingtalkConfig;
-  GitConfig gitConfig;
-  IosBuildConfig iosBuildConfig;
-  PgyConfig pgyConfig;
+  String? name;
+  String? description;
+  ApkBuildConfig? apkBuildConfig;
+  AppStoreConfig? appStoreConfig;
+  DingtalkConfig? dingtalkConfig;
+  GitConfig? gitConfig;
+  IosBuildConfig? iosBuildConfig;
+  PgyConfig? pgyConfig;
 
   Config({
     this.apkBuildConfig,
@@ -71,33 +71,33 @@ class Config {
     data['ios_enable'] = this.iosEnable;
     data['name'] = this.name;
     if (this.apkBuildConfig != null) {
-      data['apk_build_config'] = this.apkBuildConfig.toJson();
+      data['apk_build_config'] = this.apkBuildConfig!.toJson();
     }
     if (this.appStoreConfig != null) {
-      data['app_store_config'] = this.appStoreConfig.toJson();
+      data['app_store_config'] = this.appStoreConfig!.toJson();
     }
     if (this.dingtalkConfig != null) {
-      data['dingtalk_config'] = this.dingtalkConfig.toJson();
+      data['dingtalk_config'] = this.dingtalkConfig!.toJson();
     }
     if (this.gitConfig != null) {
-      data['git_config'] = this.gitConfig.toJson();
+      data['git_config'] = this.gitConfig!.toJson();
     }
     if (this.iosBuildConfig != null) {
-      data['ios_build_config'] = this.iosBuildConfig.toJson();
+      data['ios_build_config'] = this.iosBuildConfig!.toJson();
     }
     if (this.pgyConfig != null) {
-      data['pgy_config'] = this.pgyConfig.toJson();
+      data['pgy_config'] = this.pgyConfig!.toJson();
     }
     return data;
   }
 }
 
 class GitConfig {
-  String branch;
-  String email;
-  String password;
-  String remote;
-  String username;
+  String? branch;
+  String? email;
+  String? password;
+  String? remote;
+  String? username;
 
   GitConfig({
     this.branch,
@@ -129,18 +129,18 @@ class GitConfig {
 }
 
 class BuildConfig {
-  String buildName;
-  String buildNumber;
-  String buildType;
-  String dartDefine;
-  String exportType;
-  String flavor;
-  bool obfuscate;
-  String performanceMeasurementFile;
-  bool pub;
-  String splitDebugInfo;
-  String target;
-  bool treeShakeIcons;
+  String? buildName;
+  String? buildNumber;
+  String? buildType;
+  String? dartDefine;
+  String? exportType;
+  String? flavor;
+  bool? obfuscate;
+  String? performanceMeasurementFile;
+  bool? pub;
+  String? splitDebugInfo;
+  String? target;
+  bool? treeShakeIcons;
 
   BuildConfig({
     this.buildName,
@@ -192,28 +192,28 @@ class BuildConfig {
 }
 
 class ApkBuildConfig extends BuildConfig {
-  bool shrink;
-  String splitPerAbi;
-  String targetPlatform;
-  bool trackWidgetCreation;
+  bool? shrink;
+  String? splitPerAbi;
+  String? targetPlatform;
+  bool? trackWidgetCreation;
 
   ApkBuildConfig({
-    String buildName,
-    String buildNumber,
-    String buildType,
-    String dartDefine,
-    String exportType,
-    String flavor,
-    bool obfuscate,
-    String performanceMeasurementFile,
-    bool pub,
+    String? buildName,
+    String? buildNumber,
+    String? buildType,
+    String? dartDefine,
+    String? exportType,
+    String? flavor,
+    bool? obfuscate,
+    String? performanceMeasurementFile,
+    bool? pub,
     this.shrink,
-    String splitDebugInfo,
+    String? splitDebugInfo,
     this.splitPerAbi,
-    String target,
+    String? target,
     this.targetPlatform,
     this.trackWidgetCreation,
-    bool treeShakeIcons,
+    bool? treeShakeIcons,
   }) : super(
           buildName: buildName,
           buildNumber: buildNumber,
@@ -273,26 +273,26 @@ class ApkBuildConfig extends BuildConfig {
 }
 
 class IosBuildConfig extends BuildConfig {
-  bool codesign;
-  ExportOptions exportOptions;
-  bool simulator;
+  bool? codesign;
+  ExportOptions? exportOptions;
+  bool? simulator;
 
   IosBuildConfig({
-    String buildName,
-    String buildNumber,
-    String buildType,
-    String dartDefine,
-    String exportType,
-    String flavor,
-    bool obfuscate,
-    String performanceMeasurementFile,
-    bool pub,
+    String? buildName,
+    String? buildNumber,
+    String? buildType,
+    String? dartDefine,
+    String? exportType,
+    String? flavor,
+    bool? obfuscate,
+    String? performanceMeasurementFile,
+    bool? pub,
     this.codesign,
     this.exportOptions,
-    String splitDebugInfo,
-    String target,
+    String? splitDebugInfo,
+    String? target,
     this.simulator,
-    bool treeShakeIcons,
+    bool? treeShakeIcons,
   }) : super(
           buildName: buildName,
           buildNumber: buildNumber,
@@ -345,15 +345,15 @@ class IosBuildConfig extends BuildConfig {
     data['target'] = this.target;
     data['tree_shake_icons'] = this.treeShakeIcons;
     if (this.exportOptions != null) {
-      data['export_options'] = this.exportOptions.toJson();
+      data['export_options'] = this.exportOptions!.toJson();
     }
     return data;
   }
 }
 
 class ExportOptions {
-  String debug;
-  String release;
+  String? debug;
+  String? release;
 
   ExportOptions({
     this.debug,
@@ -376,11 +376,11 @@ class ExportOptions {
 }
 
 class AppStoreConfig {
-  String apiIssuer;
-  String apiKey;
-  String appleId;
-  String outputFormat;
-  String type;
+  String? apiIssuer;
+  String? apiKey;
+  String? appleId;
+  String? outputFormat;
+  String? type;
 
   AppStoreConfig({
     this.apiIssuer,
@@ -412,19 +412,19 @@ class AppStoreConfig {
 }
 
 class PgyConfig {
-  String apiKey;
-  String androidAppKey;
-  String buildChannelShortcut;
-  int buildInstallDate;
-  String buildInstallEndDate;
-  String buildInstallStartDate;
-  int buildInstallType;
-  String buildName;
-  String buildPassword;
-  String buildUpdateDescription;
-  String iosAppKey;
-  String url;
-  String userKey;
+  String? apiKey;
+  String? androidAppKey;
+  String? buildChannelShortcut;
+  int? buildInstallDate;
+  String? buildInstallEndDate;
+  String? buildInstallStartDate;
+  int? buildInstallType;
+  String? buildName;
+  String? buildPassword;
+  String? buildUpdateDescription;
+  String? iosAppKey;
+  String? url;
+  String? userKey;
 
   PgyConfig({
     this.apiKey,
@@ -480,14 +480,14 @@ class PgyConfig {
 }
 
 class DingtalkConfig {
-  String accessKey;
-  List<String> atDingtalkIds;
-  List<String> atMobiles;
-  bool isAtAll;
-  bool isAutoAt;
-  String secret;
-  String title;
-  String url;
+  String? accessKey;
+  List<String>? atDingtalkIds;
+  List<String>? atMobiles;
+  bool? isAtAll;
+  bool? isAutoAt;
+  String? secret;
+  String? title;
+  String? url;
 
   DingtalkConfig({
     this.accessKey,

@@ -9,14 +9,12 @@ abstract class IProcess {
   Future<ProcessResult> run(
     String executable,
     List<String> arguments, {
-    String workingDirectory,
-    Map<String, String> environment,
+    String? workingDirectory,
+    Map<String, String>? environment,
     bool includeParentEnvironment = true,
     bool runInShell = false,
     ProcessStartMode mode = ProcessStartMode.normal,
   }) async {
-    assert(includeParentEnvironment != null);
-    assert(runInShell != null);
     var process = await Process.start(
       executable,
       arguments,

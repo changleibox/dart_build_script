@@ -4,11 +4,10 @@ enum ExportType {
   appStore,
 }
 
-ExportType convertExportType(String value) {
+ExportType? convertExportType(String value) {
   switch (value) {
     case 'export':
       return ExportType.export;
-      break;
     case 'pgy':
       return ExportType.dandelion;
     case 'appStore':
