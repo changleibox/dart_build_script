@@ -33,7 +33,7 @@ final String sourcesPath = path.join(tempPath, 'sources');
 /// outputs文件夹路径
 final String outputsPath = path.join(tempPath, 'outputs');
 
-/// iOS项目根目录
+/// 项目源码根目录
 final String rootPath = path.join(sourcesPath, targetName);
 
 /// pubspec文件路径
