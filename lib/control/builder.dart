@@ -53,7 +53,11 @@ abstract class Builder {
   Future<File?> startBuild() async {
     var result = await clean();
     if (result.exitCode == 0) {
-      result = await pubUpgrade();
+      try {
+        await pubUpgrade();
+      } catch (e) {
+        stdout.writeln('pub get失败：$e');
+      }
     }
     if (result.exitCode == 0) {
       result = await pubGet();
