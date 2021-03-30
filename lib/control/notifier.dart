@@ -9,7 +9,6 @@ import 'package:sprintf/sprintf.dart';
 import '../common/paths.dart';
 import '../config/configs.dart';
 import '../plugin/dingtalk_chatbot.dart';
-import '../util/date_time_utils.dart';
 import '../util/file_utils.dart';
 
 /// 通知
@@ -33,7 +32,8 @@ class Notifier {
       data['data']['buildVersion'],
       data['data']['buildBuildVersion'],
       FileUtils.convertFukeSize(int.tryParse(data['data']['buildFileSize'] as String)!),
-      DateTimeUtils.convertDateTime(data['data']['buildUpdated'] as String),
+      // DateTimeUtils.convertDateTime(data['data']['buildUpdated'] as String),
+      data['data']['buildUpdated'] as String,
       data['data']['buildQRCodeURL'],
       data['data']['buildShortcutUrl'],
       data['apiKey'],

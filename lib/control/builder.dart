@@ -53,10 +53,9 @@ abstract class Builder {
   Future<File?> startBuild() async {
     var result = await clean();
     if (result.exitCode == 0) {
-      try {
-        await pubUpgrade();
-      } catch (e) {
-        stdout.writeln('pub get失败：$e');
+      final upgradeResult = await pubUpgrade();
+      if (upgradeResult.exitCode != 0) {
+        stderr.writeln('flutter pub upgrade命令执行失败：${upgradeResult.stderr}');
       }
     }
     if (result.exitCode == 0) {
