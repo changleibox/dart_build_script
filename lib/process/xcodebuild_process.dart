@@ -35,6 +35,20 @@ class XcodebuildProcess extends IProcess {
     return runAsIOS('pod', arguments);
   }
 
+  /// xcodebuild list
+  Future<ProcessResult> list(
+    String workspacePath,
+    String targetName,
+  ) {
+    return runAsIOS('xcodebuild', [
+      '-list',
+      '-workspace',
+      workspacePath,
+      '-scheme',
+      targetName,
+    ]);
+  }
+
   /// xcodebuild clean
   Future<ProcessResult> clean(
     String workspacePath,
@@ -49,8 +63,6 @@ class XcodebuildProcess extends IProcess {
       targetName,
       '-configuration',
       capitalize(buildType)!,
-      '-sdk',
-      _sdk(buildType),
     ]);
   }
 

@@ -150,6 +150,14 @@ class IOSBuilder extends Builder {
     return result;
   }
 
+  /// xcodebuild list
+  Future<ProcessResult> xcodebuildList() {
+    return xcodebuildProcess.list(
+      workspacePath,
+      targetName,
+    );
+  }
+
   /// xcodebuild clean
   Future<ProcessResult> xcodebuildClean({required String buildType}) {
     return xcodebuildProcess.clean(
@@ -219,6 +227,9 @@ class IOSBuilder extends Builder {
         simulator: buildConfig.simulator,
         codesign: buildConfig.codesign,
       );
+    }
+    if (result.exitCode == 0) {
+      result = await xcodebuildList();
     }
     if (result.exitCode == 0) {
       result = await xcodebuildClean(buildType: buildType!);
