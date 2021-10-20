@@ -49,6 +49,27 @@ class XcodebuildProcess extends IProcess {
       targetName,
       '-configuration',
       capitalize(buildType)!,
+      '-sdk',
+      _sdk(buildType),
+    ]);
+  }
+
+  /// xcodebuild build
+  Future<ProcessResult> build(
+    String workspacePath,
+    String targetName, {
+    String buildType = 'debug',
+  }) {
+    return runAsIOS('xcodebuild', [
+      'build',
+      '-workspace',
+      workspacePath,
+      '-scheme',
+      targetName,
+      '-configuration',
+      capitalize(buildType)!,
+      '-sdk',
+      _sdk(buildType),
     ]);
   }
 
@@ -67,6 +88,8 @@ class XcodebuildProcess extends IProcess {
       targetName,
       '-configuration',
       capitalize(buildType)!,
+      '-sdk',
+      _sdk(buildType),
       '-archivePath',
       archivePath,
     ]);
@@ -87,5 +110,9 @@ class XcodebuildProcess extends IProcess {
       '-exportOptionsPlist',
       exportOptionsPlist,
     ]);
+  }
+
+  String _sdk(String buildType) {
+    return buildType.toLowerCase() == 'debug' ? 'iphonesimulator' : 'iphoneos';
   }
 }

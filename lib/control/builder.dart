@@ -159,6 +159,15 @@ class IOSBuilder extends Builder {
     );
   }
 
+  /// xcodebuild build
+  Future<ProcessResult> xcodebuildBuild({required String buildType}) {
+    return xcodebuildProcess.build(
+      workspacePath,
+      targetName,
+      buildType: buildType,
+    );
+  }
+
   /// xcodebuild archive
   Future<ProcessResult> xcodebuildArchive({required String buildType}) {
     return xcodebuildProcess.archive(
@@ -213,6 +222,9 @@ class IOSBuilder extends Builder {
     }
     if (result.exitCode == 0) {
       result = await xcodebuildClean(buildType: buildType!);
+    }
+    if (result.exitCode == 0) {
+      result = await xcodebuildBuild(buildType: buildType!);
     }
     if (result.exitCode == 0) {
       result = await xcodebuildArchive(buildType: buildType!);
