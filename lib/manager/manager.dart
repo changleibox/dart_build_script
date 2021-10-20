@@ -43,7 +43,7 @@ class Manager {
     final organizers = <Organizer>[];
     if (apkBuildConfig != null) {
       organizers.add(Organizer(
-        ApkBuilder('android', apkBuildConfig),
+        ApkBuilder('Android', apkBuildConfig),
         uploader: ApkUploader(
           convertExportType(apkBuildConfig.exportType!)!,
           pgyConfig,
@@ -54,7 +54,7 @@ class Manager {
     }
     if (iosBuildConfig != null) {
       organizers.add(Organizer(
-        IOSBuilder('ios', iosBuildConfig),
+        IOSBuilder('iOS', iosBuildConfig),
         uploader: IOSUploader(
           convertExportType(iosBuildConfig.exportType!)!,
           pgyConfig,

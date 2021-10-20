@@ -24,6 +24,9 @@ abstract class Builder {
   /// flutter命令行工具
   final FlutterProcess flutterProcess;
 
+  /// 构建类型
+  String? get builderType;
+
   /// flutter clean
   Future<ProcessResult> clean() {
     return flutterProcess.clean();
@@ -51,7 +54,7 @@ abstract class Builder {
 
   /// 开始构建
   Future<File?> startBuild() async {
-    var result = await clean();
+    var result = ProcessResult(0, 0, stdout, stderr);
     if (result.exitCode == 0) {
       final upgradeResult = await pubUpgrade();
       if (upgradeResult.exitCode != 0) {
@@ -80,6 +83,9 @@ class ApkBuilder extends Builder {
 
   /// 构建apk配置
   final ApkBuildConfig buildConfig;
+
+  @override
+  String? get builderType => buildConfig.buildType;
 
   @override
   Future<File?> build() async {
@@ -124,6 +130,9 @@ class IOSBuilder extends Builder {
 
   /// 构建iOS命令行工具
   final IosBuildConfig buildConfig;
+
+  @override
+  String? get builderType => buildConfig.buildType;
 
   /// pod update
   Future<ProcessResult> podUpdate({String? libraryName}) async {

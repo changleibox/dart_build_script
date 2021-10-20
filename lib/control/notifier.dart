@@ -23,12 +23,13 @@ class Notifier {
   final DingtalkChatbot chatbot;
 
   /// 通知
-  Future<Map<String, dynamic>> notify(String platform, Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> notify(String platform, String? builderType, Map<String, dynamic> data) async {
     final file = File(descriptionPath);
     var content = await file.readAsString();
     content = sprintf(content, <dynamic>[
       data['data']['buildName'],
       platform,
+      builderType?.toUpperCase() ?? 'UNKNOWN',
       data['data']['buildVersion'],
       data['data']['buildBuildVersion'],
       FileUtils.convertFukeSize(int.tryParse(data['data']['buildFileSize'] as String)!),
