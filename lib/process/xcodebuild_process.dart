@@ -52,17 +52,14 @@ class XcodebuildProcess extends IProcess {
   /// xcodebuild clean
   Future<ProcessResult> clean(
     String workspacePath,
-    String targetName, {
-    BuildType buildType = BuildType.debug,
-  }) {
+    String targetName,
+  ) {
     return runAsIOS('xcodebuild', [
       'clean',
       '-workspace',
       workspacePath,
       '-scheme',
       targetName,
-      '-configuration',
-      buildType.configuration,
     ]);
   }
 
