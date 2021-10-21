@@ -46,8 +46,8 @@ class BuildType {
   /// 调试
   static const debug = BuildType._('调试', 0, 'simulator');
 
-  /// 测试
-  static const profile = BuildType._('调试', 1, 'os');
+  /// 概述
+  static const profile = BuildType._('概述', 1, 'os');
 
   /// 发布
   static const release = BuildType._('发布', 2, 'os');
