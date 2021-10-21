@@ -8,6 +8,8 @@ import '../util/file_utils.dart';
 
 /// std工具
 class StdProgress {
+  const StdProgress._();
+
   /// 写到终端
   static void write(int count, int total) {
     final countStr = FileUtils.convertFukeSize(count);

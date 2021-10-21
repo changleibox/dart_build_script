@@ -234,9 +234,9 @@ class IOSBuilder extends Builder {
     if (result.exitCode == 0) {
       result = await xcodebuildClean(buildType: buildType!);
     }
-    if (result.exitCode == 0) {
-      result = await xcodebuildBuild(buildType: buildType!);
-    }
+    // if (result.exitCode == 0) {
+    //   result = await xcodebuildBuild(buildType: buildType!);
+    // }
     if (result.exitCode == 0) {
       result = await xcodebuildArchive(buildType: buildType!);
     }

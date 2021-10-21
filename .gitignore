@@ -47,4 +47,5 @@ app.*.map.json
 .temp/
 assets/configs.yaml
 assets/ExportOptionsDebug.plist
+assets/ExportOptionsProfile.plist
 assets/ExportOptionsRelease.plist

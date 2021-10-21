@@ -9,6 +9,8 @@ import 'package:yaml/yaml.dart';
 
 /// 处理yaml文件
 class YamlUtils {
+  const YamlUtils._();
+
   /// 读取内容
   static Map<String, dynamic> loadFile(String path) {
     final file = File(path);
