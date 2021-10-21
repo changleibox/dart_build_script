@@ -8,13 +8,18 @@ import 'package:dart_build_script/util/string_utils.dart';
 ///
 /// 构建类型
 class BuildType {
-  const BuildType._(this.name, this.index);
+  const BuildType._(this.name, this.index, this._sdk);
 
   /// 名称
   final String name;
 
   /// index
   final int index;
+
+  final String _sdk;
+
+  /// sdk名称，仅限iOS
+  String get sdk => 'iphone$_sdk';
 
   /// debug
   bool get isDebug => this == debug;
@@ -39,13 +44,13 @@ class BuildType {
   }
 
   /// 调试
-  static const debug = BuildType._('调试', 0);
+  static const debug = BuildType._('调试', 0, 'simulator');
 
   /// 测试
-  static const profile = BuildType._('调试', 1);
+  static const profile = BuildType._('调试', 1, 'os');
 
   /// 发布
-  static const release = BuildType._('发布', 2);
+  static const release = BuildType._('发布', 2, 'os');
 
   @override
   String toString() {

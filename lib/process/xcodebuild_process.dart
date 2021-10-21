@@ -81,7 +81,7 @@ class XcodebuildProcess extends IProcess {
       '-configuration',
       buildType.configuration,
       '-sdk',
-      _sdk(buildType),
+      buildType.sdk,
     ]);
   }
 
@@ -101,7 +101,7 @@ class XcodebuildProcess extends IProcess {
       '-configuration',
       buildType.configuration,
       '-sdk',
-      _sdk(buildType),
+      buildType.sdk,
       '-archivePath',
       archivePath,
     ]);
@@ -122,9 +122,5 @@ class XcodebuildProcess extends IProcess {
       '-exportOptionsPlist',
       exportOptionsPlist,
     ]);
-  }
-
-  String _sdk(BuildType buildType) {
-    return buildType.isDebug ? 'iphonesimulator' : 'iphoneos';
   }
 }
