@@ -97,8 +97,6 @@ class XcodebuildProcess extends IProcess {
       targetName,
       '-configuration',
       buildType.configuration,
-      '-sdk',
-      buildType.sdk,
       '-archivePath',
       archivePath,
     ]);
@@ -118,6 +116,7 @@ class XcodebuildProcess extends IProcess {
       exportPath,
       '-exportOptionsPlist',
       exportOptionsPlist,
+      '-allowProvisioningUpdates',
     ]);
   }
 }
