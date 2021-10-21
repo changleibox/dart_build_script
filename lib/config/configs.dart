@@ -4,6 +4,7 @@
 
 import 'dart:io';
 
+import 'package:dart_build_script/control/builder.dart';
 import 'package:dart_build_script/util/yaml_utils.dart';
 
 import '../common/paths.dart';
@@ -203,7 +204,7 @@ class BuildConfig {
     return BuildConfig(
       buildName: json['build_name'] as String?,
       buildNumber: json['build_number'] as String?,
-      buildType: json['build_type'] as String?,
+      buildType: BuildType.valueOf(json['build_type'] as String?),
       dartDefine: json['dart_define'] as String?,
       exportType: json['export_type'] as String?,
       flavor: json['flavor'] as String?,
@@ -223,7 +224,7 @@ class BuildConfig {
   String? buildNumber;
 
   /// buildType
-  String? buildType;
+  BuildType? buildType;
 
   /// dartDefine
   String? dartDefine;
@@ -277,7 +278,7 @@ class ApkBuildConfig extends BuildConfig {
   ApkBuildConfig({
     String? buildName,
     String? buildNumber,
-    String? buildType,
+    BuildType? buildType,
     String? dartDefine,
     String? exportType,
     String? flavor,
@@ -311,7 +312,7 @@ class ApkBuildConfig extends BuildConfig {
     return ApkBuildConfig(
       buildName: json['build_name'] as String?,
       buildNumber: json['build_number'] as String?,
-      buildType: json['build_type'] as String?,
+      buildType: BuildType.valueOf(json['build_type'] as String?),
       dartDefine: json['dart_define'] as String?,
       exportType: json['export_type'] as String?,
       flavor: json['flavor'] as String?,
@@ -370,7 +371,7 @@ class IosBuildConfig extends BuildConfig {
   IosBuildConfig({
     String? buildName,
     String? buildNumber,
-    String? buildType,
+    BuildType? buildType,
     String? dartDefine,
     String? exportType,
     String? flavor,
@@ -403,7 +404,7 @@ class IosBuildConfig extends BuildConfig {
     return IosBuildConfig(
       buildName: json['build_name'] as String?,
       buildNumber: json['build_number'] as String?,
-      buildType: json['build_type'] as String?,
+      buildType: BuildType.valueOf(json['build_type'] as String?),
       codesign: json['codesign'] as bool?,
       dartDefine: json['dart_define'] as String?,
       exportOptions: json['export_options'] != null

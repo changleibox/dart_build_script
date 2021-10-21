@@ -4,6 +4,8 @@
 
 import 'dart:io';
 
+import 'package:dart_build_script/control/builder.dart';
+
 import '../config/configs.dart';
 import '../enums/build_platform.dart';
 import 'process.dart';
@@ -43,7 +45,7 @@ class FlutterProcess extends IProcess {
   /// flutter build
   Future<ProcessResult> build(
     BuildPlatform platform, {
-    required String buildType,
+    required BuildType buildType,
     bool? treeShakeIcons,
     String? target,
     String? flavor,
@@ -126,7 +128,7 @@ class ApkFlutterProcess extends FlutterProcess {
   @override
   Future<ProcessResult> build(
     BuildPlatform platform, {
-    String? buildType,
+    BuildType? buildType,
     bool? treeShakeIcons,
     String? target,
     String? flavor,
@@ -174,7 +176,7 @@ class IOSFlutterProcess extends FlutterProcess {
   @override
   Future<ProcessResult> build(
     BuildPlatform platform, {
-    String? buildType,
+    BuildType? buildType,
     bool? treeShakeIcons,
     String? target,
     String? flavor,

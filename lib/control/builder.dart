@@ -4,6 +4,7 @@
 
 import 'dart:io';
 
+import 'package:dart_build_script/util/string_utils.dart';
 import 'package:path/path.dart' as path;
 
 import '../common/paths.dart';
@@ -25,7 +26,7 @@ abstract class Builder {
   final FlutterProcess flutterProcess;
 
   /// 构建类型
-  String? get builderType;
+  BuildType? get builderType;
 
   /// flutter clean
   Future<ProcessResult> clean() {
@@ -85,7 +86,7 @@ class ApkBuilder extends Builder {
   final ApkBuildConfig buildConfig;
 
   @override
-  String? get builderType => buildConfig.buildType;
+  BuildType? get builderType => buildConfig.buildType;
 
   @override
   Future<File?> build() async {
@@ -132,7 +133,7 @@ class IOSBuilder extends Builder {
   final IosBuildConfig buildConfig;
 
   @override
-  String? get builderType => buildConfig.buildType;
+  BuildType? get builderType => buildConfig.buildType;
 
   /// pod update
   Future<ProcessResult> podUpdate({String? libraryName}) async {
@@ -159,7 +160,7 @@ class IOSBuilder extends Builder {
   }
 
   /// xcodebuild clean
-  Future<ProcessResult> xcodebuildClean({required String buildType}) {
+  Future<ProcessResult> xcodebuildClean({required BuildType buildType}) {
     return xcodebuildProcess.clean(
       workspacePath,
       targetName,
@@ -168,7 +169,7 @@ class IOSBuilder extends Builder {
   }
 
   /// xcodebuild build
-  Future<ProcessResult> xcodebuildBuild({required String buildType}) {
+  Future<ProcessResult> xcodebuildBuild({required BuildType buildType}) {
     return xcodebuildProcess.build(
       workspacePath,
       targetName,
@@ -177,7 +178,7 @@ class IOSBuilder extends Builder {
   }
 
   /// xcodebuild archive
-  Future<ProcessResult> xcodebuildArchive({required String buildType}) {
+  Future<ProcessResult> xcodebuildArchive({required BuildType buildType}) {
     return xcodebuildProcess.archive(
       workspacePath,
       targetName,
@@ -187,8 +188,8 @@ class IOSBuilder extends Builder {
   }
 
   /// xcodebuild export archive
-  Future<ProcessResult> xcodebuildExportArchive({required String buildType}) {
-    final exportOptionsFileName = buildConfig.exportOptions?.toJson()[buildType.toLowerCase()] as String?;
+  Future<ProcessResult> xcodebuildExportArchive({required BuildType buildType}) {
+    final exportOptionsFileName = buildConfig.exportOptions?.toJson()[buildType.toString()] as String?;
     final exportOptionsPath = path.join(assetsPath, exportOptionsFileName);
     assert(
       File(exportOptionsPath).existsSync(),
@@ -203,8 +204,7 @@ class IOSBuilder extends Builder {
 
   @override
   Future<File?> build() async {
-    var buildType = buildConfig.buildType;
-    buildType = buildType?.toLowerCase();
+    final buildType = buildConfig.buildType;
     assert(buildType != null, '请配置buildType');
     var result = await podUpdate();
     if (result.exitCode == 0) {
@@ -259,5 +259,60 @@ class IOSBuilder extends Builder {
     }
     assert(false, '打包失败，请稍后重试');
     return null;
+  }
+}
+
+/// 构建类型
+class BuildType {
+  const BuildType._(this.name, this.index);
+
+  /// 名称
+  final String name;
+
+  /// index
+  final int index;
+
+  /// debug
+  bool get isDebug => this == debug;
+
+  /// release
+  bool get isRelease => this == release;
+
+  /// configuration
+  String get configuration => capitalize(toString())!;
+
+  /// valueOf
+  static BuildType valueOf(String? buildType) {
+    switch (buildType?.toLowerCase()) {
+      case 'debug':
+        return BuildType.debug;
+      case 'profile':
+        return BuildType.profile;
+      case 'release':
+        return BuildType.release;
+    }
+    return BuildType.debug;
+  }
+
+  /// 调试
+  static const debug = BuildType._('调试', 0);
+
+  /// 测试
+  static const profile = BuildType._('调试', 1);
+
+  /// 发布
+  static const release = BuildType._('发布', 2);
+
+  @override
+  String toString() {
+    switch (this) {
+      case debug:
+        return 'debug';
+      case profile:
+        return 'profile';
+      case release:
+        return 'release';
+    }
+    return super.toString();
   }
 }

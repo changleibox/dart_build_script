@@ -4,6 +4,7 @@
 
 import 'dart:io';
 
+import 'package:dart_build_script/control/builder.dart';
 import 'package:sprintf/sprintf.dart';
 
 import '../common/paths.dart';
@@ -23,13 +24,13 @@ class Notifier {
   final DingtalkChatbot chatbot;
 
   /// 通知
-  Future<Map<String, dynamic>> notify(String platform, String? builderType, Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> notify(String platform, BuildType? builderType, Map<String, dynamic> data) async {
     final file = File(descriptionPath);
     var content = await file.readAsString();
     content = sprintf(content, <dynamic>[
       data['data']['buildName'],
       platform,
-      builderType?.toUpperCase() ?? 'UNKNOWN',
+      builderType?.name ?? 'UNKNOWN',
       data['data']['buildVersion'],
       data['data']['buildBuildVersion'],
       FileUtils.convertFukeSize(int.tryParse(data['data']['buildFileSize'] as String)!),

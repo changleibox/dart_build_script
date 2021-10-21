@@ -4,7 +4,8 @@
 
 import 'dart:io';
 
-import '../util/string_utils.dart';
+import 'package:dart_build_script/control/builder.dart';
+
 import 'process.dart';
 
 /// xcodebuild命令行
@@ -53,7 +54,7 @@ class XcodebuildProcess extends IProcess {
   Future<ProcessResult> clean(
     String workspacePath,
     String targetName, {
-    String buildType = 'debug',
+    BuildType buildType = BuildType.debug,
   }) {
     return runAsIOS('xcodebuild', [
       'clean',
@@ -62,7 +63,7 @@ class XcodebuildProcess extends IProcess {
       '-scheme',
       targetName,
       '-configuration',
-      capitalize(buildType)!,
+      buildType.configuration,
     ]);
   }
 
@@ -70,7 +71,7 @@ class XcodebuildProcess extends IProcess {
   Future<ProcessResult> build(
     String workspacePath,
     String targetName, {
-    String buildType = 'debug',
+    BuildType buildType = BuildType.debug,
   }) {
     return runAsIOS('xcodebuild', [
       'build',
@@ -79,7 +80,7 @@ class XcodebuildProcess extends IProcess {
       '-scheme',
       targetName,
       '-configuration',
-      capitalize(buildType)!,
+      buildType.configuration,
       '-sdk',
       _sdk(buildType),
     ]);
@@ -90,7 +91,7 @@ class XcodebuildProcess extends IProcess {
     String workspacePath,
     String targetName,
     String archivePath, {
-    String buildType = 'debug',
+    BuildType buildType = BuildType.debug,
   }) {
     return runAsIOS('xcodebuild', [
       'archive',
@@ -99,7 +100,7 @@ class XcodebuildProcess extends IProcess {
       '-scheme',
       targetName,
       '-configuration',
-      capitalize(buildType)!,
+      buildType.configuration,
       '-sdk',
       _sdk(buildType),
       '-archivePath',
@@ -124,7 +125,7 @@ class XcodebuildProcess extends IProcess {
     ]);
   }
 
-  String _sdk(String buildType) {
-    return buildType.toLowerCase() == 'debug' ? 'iphonesimulator' : 'iphoneos';
+  String _sdk(BuildType buildType) {
+    return buildType.isDebug ? 'iphonesimulator' : 'iphoneos';
   }
 }
