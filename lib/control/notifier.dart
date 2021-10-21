@@ -4,13 +4,12 @@
 
 import 'dart:io';
 
-import 'package:dart_build_script/control/builder.dart';
+import 'package:dart_build_script/common/paths.dart';
+import 'package:dart_build_script/config/configs.dart';
+import 'package:dart_build_script/enums/build_type.dart';
+import 'package:dart_build_script/plugin/dingtalk_chatbot.dart';
+import 'package:dart_build_script/util/file_utils.dart';
 import 'package:sprintf/sprintf.dart';
-
-import '../common/paths.dart';
-import '../config/configs.dart';
-import '../plugin/dingtalk_chatbot.dart';
-import '../util/file_utils.dart';
 
 /// 通知
 class Notifier {

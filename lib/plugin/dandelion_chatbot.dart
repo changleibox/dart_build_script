@@ -4,10 +4,9 @@
 
 import 'dart:io';
 
+import 'package:dart_build_script/enums/install_type.dart';
+import 'package:dart_build_script/plugin/std_progress.dart';
 import 'package:dio/dio.dart';
-
-import '../enums/install_type.dart';
-import 'std_progress.dart';
 
 /// 蒲公英智能机器人
 class DandelionChatbot {

@@ -5,9 +5,8 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:dart_build_script/util/parse_utils.dart';
 import 'package:dio/dio.dart';
-
-import '../util/parse_utils.dart';
 
 /// 钉钉智能机器人
 class DingtalkChatbot {

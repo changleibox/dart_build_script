@@ -4,11 +4,10 @@
 
 import 'dart:io';
 
-import 'package:dart_build_script/control/builder.dart';
-
-import '../config/configs.dart';
-import '../enums/build_platform.dart';
-import 'process.dart';
+import 'package:dart_build_script/config/configs.dart';
+import 'package:dart_build_script/enums/build_platform.dart';
+import 'package:dart_build_script/enums/build_type.dart';
+import 'package:dart_build_script/process/process.dart';
 
 /// flutter命令行工具
 class FlutterProcess extends IProcess {

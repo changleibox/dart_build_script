@@ -4,10 +4,9 @@
 
 import 'dart:io';
 
-import 'package:dart_build_script/control/builder.dart';
+import 'package:dart_build_script/common/paths.dart';
+import 'package:dart_build_script/enums/build_type.dart';
 import 'package:dart_build_script/util/yaml_utils.dart';
-
-import '../common/paths.dart';
 
 /// 配置
 const configs = Configs();

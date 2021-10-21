@@ -5,7 +5,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import '../common/paths.dart';
+import 'package:dart_build_script/common/paths.dart';
 
 /// 命令行工具
 abstract class IProcess {

@@ -4,9 +4,9 @@
 
 import 'dart:io';
 
-import '../common/paths.dart';
-import '../config/configs.dart';
-import '../process/git_process.dart';
+import 'package:dart_build_script/common/paths.dart';
+import 'package:dart_build_script/config/configs.dart';
+import 'package:dart_build_script/process/git_process.dart';
 
 /// git工具
 class Gitter {

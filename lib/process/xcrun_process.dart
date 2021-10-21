@@ -4,7 +4,7 @@
 
 import 'dart:io';
 
-import 'process.dart';
+import 'package:dart_build_script/process/process.dart';
 
 /// xcrun命令行
 class XcrunProcess extends IProcess {

@@ -4,9 +4,8 @@
 
 import 'dart:io';
 
-import 'package:dart_build_script/control/builder.dart';
-
-import 'process.dart';
+import 'package:dart_build_script/enums/build_type.dart';
+import 'package:dart_build_script/process/process.dart';
 
 /// xcodebuild命令行
 class XcodebuildProcess extends IProcess {

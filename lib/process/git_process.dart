@@ -4,7 +4,7 @@
 
 import 'dart:io';
 
-import 'process.dart';
+import 'package:dart_build_script/process/process.dart';
 
 /// git命令行工具
 class GitProcess extends IProcess {

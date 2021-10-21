@@ -4,13 +4,13 @@
 
 import 'dart:io';
 
-import '../common/paths.dart';
-import '../config/configs.dart';
-import '../enums/export_type.dart';
-import '../enums/install_type.dart';
-import '../plugin/dandelion_chatbot.dart';
-import '../util/file_utils.dart';
-import 'publisher.dart';
+import 'package:dart_build_script/common/paths.dart';
+import 'package:dart_build_script/config/configs.dart';
+import 'package:dart_build_script/control/publisher.dart';
+import 'package:dart_build_script/enums/export_type.dart';
+import 'package:dart_build_script/enums/install_type.dart';
+import 'package:dart_build_script/plugin/dandelion_chatbot.dart';
+import 'package:dart_build_script/util/file_utils.dart';
 
 /// 上传器
 abstract class Uploader {

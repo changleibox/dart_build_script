@@ -4,14 +4,13 @@
 
 import 'dart:io';
 
-import 'package:dart_build_script/util/string_utils.dart';
+import 'package:dart_build_script/common/paths.dart';
+import 'package:dart_build_script/config/configs.dart';
+import 'package:dart_build_script/enums/build_platform.dart';
+import 'package:dart_build_script/enums/build_type.dart';
+import 'package:dart_build_script/process/flutter_process.dart';
+import 'package:dart_build_script/process/xcodebuild_process.dart';
 import 'package:path/path.dart' as path;
-
-import '../common/paths.dart';
-import '../config/configs.dart';
-import '../enums/build_platform.dart';
-import '../process/flutter_process.dart';
-import '../process/xcodebuild_process.dart';
 
 /// 构建类
 abstract class Builder {
@@ -259,60 +258,5 @@ class IOSBuilder extends Builder {
     }
     assert(false, '打包失败，请稍后重试');
     return null;
-  }
-}
-
-/// 构建类型
-class BuildType {
-  const BuildType._(this.name, this.index);
-
-  /// 名称
-  final String name;
-
-  /// index
-  final int index;
-
-  /// debug
-  bool get isDebug => this == debug;
-
-  /// release
-  bool get isRelease => this == release;
-
-  /// configuration
-  String get configuration => capitalize(toString())!;
-
-  /// valueOf
-  static BuildType valueOf(String? buildType) {
-    switch (buildType?.toLowerCase()) {
-      case 'debug':
-        return BuildType.debug;
-      case 'profile':
-        return BuildType.profile;
-      case 'release':
-        return BuildType.release;
-    }
-    return BuildType.debug;
-  }
-
-  /// 调试
-  static const debug = BuildType._('调试', 0);
-
-  /// 测试
-  static const profile = BuildType._('调试', 1);
-
-  /// 发布
-  static const release = BuildType._('发布', 2);
-
-  @override
-  String toString() {
-    switch (this) {
-      case debug:
-        return 'debug';
-      case profile:
-        return 'profile';
-      case release:
-        return 'release';
-    }
-    return super.toString();
   }
 }

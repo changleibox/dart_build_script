@@ -4,8 +4,8 @@
 
 import 'dart:io';
 
-import '../config/configs.dart';
-import '../process/xcrun_process.dart';
+import 'package:dart_build_script/config/configs.dart';
+import 'package:dart_build_script/process/xcrun_process.dart';
 
 /// 发布器
 abstract class Publisher {

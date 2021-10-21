@@ -4,13 +4,13 @@
 
 import 'dart:io';
 
-import '../config/configs.dart';
-import '../control/builder.dart';
-import '../control/gitter.dart';
-import '../control/notifier.dart';
-import '../control/uploader.dart';
-import '../enums/export_type.dart';
-import 'organizer.dart';
+import 'package:dart_build_script/config/configs.dart';
+import 'package:dart_build_script/control/builder.dart';
+import 'package:dart_build_script/control/gitter.dart';
+import 'package:dart_build_script/control/notifier.dart';
+import 'package:dart_build_script/control/uploader.dart';
+import 'package:dart_build_script/enums/export_type.dart';
+import 'package:dart_build_script/manager/organizer.dart';
 
 /// 管理器
 class Manager {

@@ -4,7 +4,7 @@
 
 import 'dart:io';
 
-import '../util/file_utils.dart';
+import 'package:dart_build_script/util/file_utils.dart';
 
 /// std工具
 class StdProgress {

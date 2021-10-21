@@ -2,9 +2,9 @@
  * Copyright (c) 2021 CHANGLEI. All rights reserved.
  */
 
-import '../control/builder.dart';
-import '../control/notifier.dart';
-import '../control/uploader.dart';
+import 'package:dart_build_script/control/builder.dart';
+import 'package:dart_build_script/control/notifier.dart';
+import 'package:dart_build_script/control/uploader.dart';
 
 /// 把所有流程组织在一起
 class Organizer {
