@@ -25,7 +25,7 @@ abstract class Builder {
   final FlutterProcess flutterProcess;
 
   /// 构建类型
-  BuildType? get builderType;
+  BuildType? get buildType;
 
   /// flutter clean
   Future<ProcessResult> clean() {
@@ -85,7 +85,7 @@ class ApkBuilder extends Builder {
   final ApkBuildConfig buildConfig;
 
   @override
-  BuildType? get builderType => buildConfig.buildType;
+  BuildType? get buildType => buildConfig.buildType;
 
   @override
   Future<File?> build() async {
@@ -132,7 +132,7 @@ class IOSBuilder extends Builder {
   final IosBuildConfig buildConfig;
 
   @override
-  BuildType? get builderType => buildConfig.buildType;
+  BuildType? get buildType => buildConfig.buildType;
 
   /// pod update
   Future<ProcessResult> podUpdate({String? libraryName}) async {

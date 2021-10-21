@@ -31,7 +31,7 @@ class Organizer {
     final dynamic result = await uploader!.upload(appFile);
     if (notifier != null && result is Map<String, dynamic>) {
       assert(result['code'] == 0, result['message']);
-      return await notifier!.notify(builder.platform, builder.builderType, result);
+      return await notifier!.notify(builder.platform, builder.buildType, result);
     }
     return result;
   }
