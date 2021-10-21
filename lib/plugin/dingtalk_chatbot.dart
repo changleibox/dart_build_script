@@ -62,7 +62,7 @@ class DingtalkChatbot {
     String text, {
     bool isAtAll = false,
     List<String>? atMobiles,
-    List<String>? atDingtalkIds,
+    List<String>? atUserIds,
     bool isAutoAt = true,
   }) {
     final data = <String, dynamic>{
@@ -79,8 +79,8 @@ class DingtalkChatbot {
         data['markdown']['text'] = text + '\n' + atMobiles.map((e) => '@$e').join(' ');
       }
     }
-    if (atDingtalkIds != null && atDingtalkIds.isNotEmpty) {
-      data['at']['atDingtalIds'] = atDingtalkIds;
+    if (atUserIds != null && atUserIds.isNotEmpty) {
+      data['at']['atUserIds'] = atUserIds;
     }
     return sendMessage(data);
   }

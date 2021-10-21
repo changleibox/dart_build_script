@@ -47,7 +47,7 @@ class Notifier {
       content,
       isAtAll: config.isAtAll!,
       atMobiles: config.atMobiles,
-      atDingtalkIds: config.atDingtalkIds,
+      atUserIds: config.atUserIds,
       isAutoAt: config.isAutoAt!,
     );
   }

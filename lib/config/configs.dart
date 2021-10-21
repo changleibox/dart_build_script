@@ -644,7 +644,7 @@ class DingtalkConfig {
   /// 构造函数
   DingtalkConfig({
     this.accessKey,
-    this.atDingtalkIds,
+    this.atUserIds,
     this.atMobiles,
     this.isAtAll,
     this.isAutoAt,
@@ -657,8 +657,7 @@ class DingtalkConfig {
   factory DingtalkConfig.fromJson(Map<String, dynamic> json) {
     return DingtalkConfig(
       accessKey: json['access_key'] as String?,
-      atDingtalkIds:
-          json['at_dingtalk_ids'] != null ? List<String>.from(json['at_dingtalk_ids'] as Iterable<dynamic>) : null,
+      atUserIds: json['at_user_ids'] != null ? List<String>.from(json['at_user_ids'] as Iterable<dynamic>) : null,
       atMobiles: json['at_mobiles'] != null ? List<String>.from(json['at_mobiles'] as Iterable<dynamic>) : null,
       isAtAll: json['is_at_all'] as bool?,
       isAutoAt: json['is_auto_at'] as bool?,
@@ -672,7 +671,7 @@ class DingtalkConfig {
   String? accessKey;
 
   /// atDingtalkIds
-  List<String>? atDingtalkIds;
+  List<String>? atUserIds;
 
   /// atMobiles
   List<String>? atMobiles;
@@ -701,8 +700,8 @@ class DingtalkConfig {
     data['secret'] = secret;
     data['title'] = title;
     data['url'] = url;
-    if (atDingtalkIds != null) {
-      data['at_dingtalk_ids'] = atDingtalkIds;
+    if (atUserIds != null) {
+      data['at_user_ids'] = atUserIds;
     }
     if (atMobiles != null) {
       data['at_mobiles'] = atMobiles;
