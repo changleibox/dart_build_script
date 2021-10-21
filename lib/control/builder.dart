@@ -89,7 +89,6 @@ class ApkBuilder extends Builder {
 
   @override
   Future<File?> build() async {
-    final buildType = buildConfig.buildType;
     assert(buildType != null, '请配置buildType');
     final result = await flutterProcess.build(
       BuildPlatform.apk,
@@ -159,35 +158,34 @@ class IOSBuilder extends Builder {
   }
 
   /// xcodebuild clean
-  Future<ProcessResult> xcodebuildClean({required BuildType buildType}) {
+  Future<ProcessResult> xcodebuildClean() {
     return xcodebuildProcess.clean(
       workspacePath,
       targetName,
-      buildType: buildType,
     );
   }
 
   /// xcodebuild build
-  Future<ProcessResult> xcodebuildBuild({required BuildType buildType}) {
+  Future<ProcessResult> xcodebuildBuild() {
     return xcodebuildProcess.build(
       workspacePath,
       targetName,
-      buildType: buildType,
+      buildType: buildType!,
     );
   }
 
   /// xcodebuild archive
-  Future<ProcessResult> xcodebuildArchive({required BuildType buildType}) {
+  Future<ProcessResult> xcodebuildArchive() {
     return xcodebuildProcess.archive(
       workspacePath,
       targetName,
       archivePath,
-      buildType: buildType,
+      buildType: buildType!,
     );
   }
 
   /// xcodebuild export archive
-  Future<ProcessResult> xcodebuildExportArchive({required BuildType buildType}) {
+  Future<ProcessResult> xcodebuildExportArchive() {
     final exportOptionsFileName = buildConfig.exportOptions?.toJson()[buildType.toString()] as String?;
     final exportOptionsPath = path.join(assetsPath, exportOptionsFileName);
     assert(
@@ -210,6 +208,12 @@ class IOSBuilder extends Builder {
       result = await podInstall(verbose: true, repoUpdate: false);
     }
     if (result.exitCode == 0) {
+      result = await xcodebuildList();
+    }
+    if (result.exitCode == 0) {
+      result = await xcodebuildClean();
+    }
+    if (result.exitCode == 0) {
       result = await flutterProcess.build(
         BuildPlatform.ios,
         buildType: buildType!,
@@ -228,19 +232,10 @@ class IOSBuilder extends Builder {
       );
     }
     if (result.exitCode == 0) {
-      result = await xcodebuildList();
+      result = await xcodebuildArchive();
     }
     if (result.exitCode == 0) {
-      result = await xcodebuildClean(buildType: buildType!);
-    }
-    // if (result.exitCode == 0) {
-    //   result = await xcodebuildBuild(buildType: buildType!);
-    // }
-    if (result.exitCode == 0) {
-      result = await xcodebuildArchive(buildType: buildType!);
-    }
-    if (result.exitCode == 0) {
-      result = await xcodebuildExportArchive(buildType: buildType!);
+      result = await xcodebuildExportArchive();
     }
     File? ipaFile;
     final directory = Directory(ipaExportPath);
