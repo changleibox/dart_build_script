@@ -46,6 +46,4 @@ app.*.map.json
 # 自定义
 .temp/
 assets/configs.yaml
-assets/ExportOptionsDebug.plist
-assets/ExportOptionsProfile.plist
-assets/ExportOptionsRelease.plist
+assets/ExportOptions*.plist

@@ -460,6 +460,7 @@ class ExportOptions {
   /// 构造函数
   ExportOptions({
     this.debug,
+    this.profile,
     this.release,
   });
 
@@ -467,12 +468,16 @@ class ExportOptions {
   factory ExportOptions.fromJson(Map<String, dynamic> json) {
     return ExportOptions(
       debug: json['debug'] as String?,
+      profile: json['profile'] as String?,
       release: json['release'] as String?,
     );
   }
 
   /// debug模式下的配置文件名
   String? debug;
+
+  /// profile模式下的配置文件名
+  String? profile;
 
   /// release模式下的配置文件名
   String? release;
@@ -481,6 +486,7 @@ class ExportOptions {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['debug'] = debug;
+    data['profile'] = profile;
     data['release'] = release;
     return data;
   }
