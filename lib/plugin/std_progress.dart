@@ -15,6 +15,5 @@ class StdProgress {
     final countStr = FileUtils.convertFukeSize(count).replaceAll(' ', '').replaceAll('Byte', 'B');
     final totalStr = FileUtils.convertFukeSize(total).replaceAll(' ', '').replaceAll('Byte', 'B');
     stdout.write('\r${prefix ?? ''}(${count * 100 / total}%)：[${('=' * count).padRight(100)}] $countStr/$totalStr');
-    stdout.flush();
   }
 }
