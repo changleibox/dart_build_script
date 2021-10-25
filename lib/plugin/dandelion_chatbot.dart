@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'package:dart_build_script/enums/install_type.dart';
 import 'package:dart_build_script/plugin/std_progress.dart';
+import 'package:dart_build_script/util/file_utils.dart';
 import 'package:dio/dio.dart';
 
 /// 蒲公英智能机器人
@@ -96,7 +97,11 @@ class DandelionChatbot {
       url,
       data: FormData.fromMap(data),
       onSendProgress: (count, total) {
-        StdProgress.writeProgress(count, total, '正在上传');
+        final percent = count * 100 / total;
+        final formattedPercent = '${percent.toStringAsFixed(2)}%';
+        final countStr = FileUtils.convertFukeSize(count).replaceAll(' ', '').replaceAll('Byte', 'B');
+        final totalStr = FileUtils.convertFukeSize(total).replaceAll(' ', '').replaceAll('Byte', 'B');
+        StdProgress.writeProgress(count, total, '正在上传($formattedPercent)：', ' $countStr/$totalStr');
       },
     );
     return response.data as Map<String, dynamic>;
