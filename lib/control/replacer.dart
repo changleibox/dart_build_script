@@ -11,7 +11,7 @@ import 'package:path/path.dart' as path;
 
 const _debugUrl = r'http://8.136.190.38:8000';
 const _releaseUrl = r'api.graspishop.com';
-const _indent = '  ';
+const _indent = r'  ';
 
 /// Created by changlei on 2021/10/25.
 ///
@@ -63,14 +63,28 @@ class Replacer {
   ///
   /// [filePath]相对[rootPath]路径
   static void _replace(String filePath, Map<String, String?> replaceContents) {
+    _visitLines(filePath, (lines, line) {
+      String? newLine = line;
+      for (var key in replaceContents.keys) {
+        if (RegExp(key).hasMatch(line)) {
+          newLine = replaceContents[key];
+        }
+      }
+      return newLine;
+    });
+  }
+
+  /// 执行替换
+  ///
+  /// [filePath]相对[rootPath]路径
+  static void _visitLines(String filePath, String? Function(List<String?> lines, String line) _visitor) {
     final buildConfig = File(path.join(rootPath, filePath));
     final lines = List<String?>.of(buildConfig.readAsLinesSync());
+    final unmodifiableLines = List<String?>.unmodifiable(lines);
     for (var i = 0; i < lines.length; i++) {
       final line = lines[i];
-      for (var key in replaceContents.keys) {
-        if (line != null && RegExp(key).hasMatch(line)) {
-          lines[i] = replaceContents[key];
-        }
+      if (line != null) {
+        lines[i] = _visitor(unmodifiableLines, line);
       }
     }
     final contents = lines.where((element) => element?.isNotEmpty == true).join('\n');
@@ -86,16 +100,21 @@ class ApkReplacer extends Replacer {
     required ExportType exportType,
   }) : super(buildType, exportType);
 
-  static const String _indent = '            ';
+  static const String _indent = r'            ';
+  static const String _mainActivity = r'android:name=".MainActivity"';
+  static const String _landscape = r'android:screenOrientation="landscape"';
 
   @override
   Future<void> replace() async {
     await super.replace();
-    Replacer._replace(manifestPath, <String, String?>{
-      r'.*?android:name=".MainActivity"': <String>[
-        _indent + r'android:name=".MainActivity"',
-        _indent + r'android:screenOrientation="landscape"',
-      ].join('\n'),
+    Replacer._visitLines(manifestPath, (lines, line) {
+      if (lines.any((element) => element?.trim() == _landscape)) {
+        return line;
+      }
+      if (RegExp('.*?$_mainActivity').hasMatch(line)) {
+        return <String>[_indent + _mainActivity, _indent + _landscape].join('\n');
+      }
+      return line;
     });
   }
 }
