@@ -15,7 +15,12 @@ import 'package:dart_build_script/util/file_utils.dart';
 /// 上传器
 abstract class Uploader {
   /// 构造函数
-  Uploader(this.exportType, this.pgyConfig, this.publisher, {this.appKey});
+  const Uploader(
+    this.exportType,
+    this.pgyConfig,
+    this.publisher, {
+    this.appKey,
+  });
 
   /// 导出类型
   final ExportType exportType;
@@ -30,7 +35,7 @@ abstract class Uploader {
   final Publisher? publisher;
 
   /// 上传
-  Future<dynamic> upload(File file) async {
+  Future<Object?> upload(File file) async {
     switch (exportType) {
       case ExportType.export:
         return await export(file);

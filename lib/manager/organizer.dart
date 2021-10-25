@@ -9,7 +9,11 @@ import 'package:dart_build_script/control/uploader.dart';
 /// 把所有流程组织在一起
 class Organizer {
   /// 构造函数
-  Organizer(this.builder, {this.uploader, this.notifier});
+  const Organizer(
+    this.builder, {
+    this.uploader,
+    this.notifier,
+  });
 
   /// 构建器
   final Builder builder;
@@ -22,6 +26,7 @@ class Organizer {
 
   /// 发布
   Future<dynamic> release() async {
+    await builder.replacer.replace();
     final appFile = await builder.startBuild();
     assert(appFile?.existsSync() == true, '构建失败，请稍后重试');
 

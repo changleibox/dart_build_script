@@ -32,6 +32,9 @@ abstract class Builder {
   /// 导出类型
   ExportType get exportType;
 
+  /// 替换器
+  Replacer get replacer;
+
   /// flutter clean
   Future<ProcessResult> clean() {
     return flutterProcess.clean();
@@ -59,16 +62,6 @@ abstract class Builder {
 
   /// 开始构建
   Future<File?> startBuild() async {
-    switch (exportType) {
-      case ExportType.export:
-      case ExportType.dandelion:
-        Replacer.debugBuildConfig(buildConfigPath);
-        break;
-      case ExportType.appStore:
-        Replacer.releaseBuildConfig(buildConfigPath);
-        break;
-    }
-
     var result = ProcessResult(0, 0, stdout, stderr);
     if (result.exitCode == 0) {
       final upgradeResult = await pubUpgrade();
@@ -94,7 +87,10 @@ abstract class Builder {
 /// 构建apk
 class ApkBuilder extends Builder {
   /// 构造函数
-  const ApkBuilder(String name, this.buildConfig) : super(name, flutterProcess: const ApkFlutterProcess());
+  const ApkBuilder(
+    String name,
+    this.buildConfig,
+  ) : super(name, flutterProcess: const ApkFlutterProcess());
 
   /// 构建apk配置
   final ApkBuildConfig buildConfig;
@@ -104,6 +100,9 @@ class ApkBuilder extends Builder {
 
   @override
   ExportType get exportType => convertExportType(buildConfig.exportType!)!;
+
+  @override
+  Replacer get replacer => ApkReplacer(buildType: buildType!, exportType: exportType);
 
   @override
   Future<File?> build() async {
@@ -153,6 +152,9 @@ class IOSBuilder extends Builder {
 
   @override
   ExportType get exportType => convertExportType(buildConfig.exportType!)!;
+
+  @override
+  Replacer get replacer => ApkReplacer(buildType: buildType!, exportType: exportType);
 
   /// pod update
   Future<ProcessResult> podUpdate({String? libraryName}) async {
