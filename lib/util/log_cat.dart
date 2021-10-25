@@ -4,6 +4,8 @@
 
 import 'dart:io';
 
+const _ansiEsc = '\x1B[';
+
 /// Created by changlei on 2/20/21.
 ///
 /// 打印日志
@@ -12,47 +14,47 @@ class Log {
 
   /// 打印，只在debug模式
   static void normal(Object? obj, {String? tag}) {
-    colorPrint(obj, tag: tag, fore: LogForeColors.normal);
+    colorPrint(obj, tag: tag, forColor: AnsiForColors.normal);
   }
 
   /// 打印，只在debug模式
   static void v(Object? obj, {String? tag}) {
-    colorPrint(obj, tag: tag, fore: LogForeColors.blue);
+    colorPrint(obj, tag: tag, forColor: AnsiForColors.blue);
   }
 
   /// 打印，只在debug模式
   static void d(Object? obj, {String? tag}) {
-    colorPrint(obj, tag: tag, fore: LogForeColors.blue);
+    colorPrint(obj, tag: tag, forColor: AnsiForColors.blue);
   }
 
   /// 打印，只在debug模式
   static void i(Object? obj, {String? tag}) {
-    colorPrint(obj, tag: tag, fore: LogForeColors.green);
+    colorPrint(obj, tag: tag, forColor: AnsiForColors.green);
   }
 
   /// 打印，只在debug模式
   static void w(Object? obj, {String? tag}) {
-    colorPrint(obj, tag: tag, fore: LogForeColors.yellow);
+    colorPrint(obj, tag: tag, forColor: AnsiForColors.yellow);
   }
 
   /// 打印，只在debug模式
   static void e(Object? obj, {String? tag}) {
-    colorPrint(obj, tag: tag, fore: LogForeColors.red);
+    colorPrint(obj, tag: tag, forColor: AnsiForColors.red);
   }
 
   /// 彩色打印
   static void colorPrint(
     Object? obj, {
     String? tag,
-    LogForeColors fore = LogForeColors.normal,
-    LogBackColors back = LogBackColors.normal,
-    LogMode mode = LogMode.normal,
+    AnsiForColors forColor = AnsiForColors.normal,
+    AnsiBgColors bgColor = AnsiBgColors.normal,
+    AnsiMode mode = AnsiMode.normal,
   }) {
     stdout.writeln(compositionColor(
       obj,
       tag: tag,
-      fore: fore,
-      back: back,
+      fore: forColor,
+      back: bgColor,
       mode: mode,
     ));
   }
@@ -61,52 +63,52 @@ class Log {
   static String compositionColor(
     Object? obj, {
     String? tag,
-    LogForeColors fore = LogForeColors.normal,
-    LogBackColors back = LogBackColors.normal,
-    LogMode mode = LogMode.normal,
+    AnsiForColors fore = AnsiForColors.normal,
+    AnsiBgColors back = AnsiBgColors.normal,
+    AnsiMode mode = AnsiMode.normal,
   }) {
     final contents = [
-      '\x1B[$mode;$back;${fore}m',
+      '$_ansiEsc$mode;$back;${fore}m',
       [if (tag != null) tag, obj?.toString()].join(': '),
-      '\x1B[${LogForeColors.normal}m',
+      '$_ansiEsc${AnsiForColors.normal}m',
     ];
     return contents.join();
   }
 }
 
 /// color
-class LogForeColors {
-  const LogForeColors._(this.code);
+class AnsiForColors {
+  const AnsiForColors._(this.code);
 
   /// 颜色编码
   final int code;
 
   /// normal
-  static const normal = LogForeColors._(0);
+  static const normal = AnsiForColors._(0);
 
   /// foreBlack
-  static const black = LogForeColors._(30);
+  static const black = AnsiForColors._(30);
 
   /// foreRed
-  static const red = LogForeColors._(31);
+  static const red = AnsiForColors._(31);
 
   /// foreGreen
-  static const green = LogForeColors._(32);
+  static const green = AnsiForColors._(32);
 
   /// foreYellow
-  static const yellow = LogForeColors._(33);
+  static const yellow = AnsiForColors._(33);
 
   /// foreBlue
-  static const blue = LogForeColors._(34);
+  static const blue = AnsiForColors._(34);
 
   /// forePurple
-  static const purple = LogForeColors._(35);
+  static const purple = AnsiForColors._(35);
 
   /// foreCyan
-  static const cyan = LogForeColors._(36);
+  static const cyan = AnsiForColors._(36);
 
   /// foreWhite
-  static const white = LogForeColors._(37);
+  static const white = AnsiForColors._(37);
 
   @override
   String toString() {
@@ -115,38 +117,38 @@ class LogForeColors {
 }
 
 /// color
-class LogBackColors {
-  const LogBackColors._(this.code);
+class AnsiBgColors {
+  const AnsiBgColors._(this.code);
 
   /// 颜色编码
   final int code;
 
   /// normal
-  static const normal = LogBackColors._(0);
+  static const normal = AnsiBgColors._(0);
 
   /// backBlack
-  static const black = LogBackColors._(40);
+  static const black = AnsiBgColors._(40);
 
   /// backRed
-  static const red = LogBackColors._(41);
+  static const red = AnsiBgColors._(41);
 
   /// backGreen
-  static const green = LogBackColors._(42);
+  static const green = AnsiBgColors._(42);
 
   /// backYellow
-  static const yellow = LogBackColors._(43);
+  static const yellow = AnsiBgColors._(43);
 
   /// backBlue
-  static const blue = LogBackColors._(44);
+  static const blue = AnsiBgColors._(44);
 
   /// backPurple
-  static const purple = LogBackColors._(45);
+  static const purple = AnsiBgColors._(45);
 
   /// backCyan
-  static const cyan = LogBackColors._(46);
+  static const cyan = AnsiBgColors._(46);
 
   /// backWhite
-  static const white = LogBackColors._(47);
+  static const white = AnsiBgColors._(47);
 
   @override
   String toString() {
@@ -155,26 +157,26 @@ class LogBackColors {
 }
 
 /// log mode
-class LogMode {
-  const LogMode._(this.code);
+class AnsiMode {
+  const AnsiMode._(this.code);
 
   /// code
   final int code;
 
   /// normal
-  static const normal = LogMode._(0);
+  static const normal = AnsiMode._(0);
 
   /// bold
-  static const bold = LogMode._(1);
+  static const bold = AnsiMode._(1);
 
   /// underline
-  static const underline = LogMode._(4);
+  static const underline = AnsiMode._(4);
 
   /// blink
-  static const blink = LogMode._(5);
+  static const blink = AnsiMode._(5);
 
   /// invert
-  static const invert = LogMode._(7);
+  static const invert = AnsiMode._(7);
 
   @override
   String toString() {

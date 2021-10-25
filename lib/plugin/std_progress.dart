@@ -16,7 +16,7 @@ class StdProgress {
     stdout.write(
       Log.compositionColor(
         '\r${prefix ?? ''}[$formattedProgress]${suffix ?? ''}',
-        fore: LogForeColors.blue,
+        fore: AnsiForColors.blue,
       ),
     );
     if (count >= total) {
