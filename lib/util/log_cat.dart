@@ -50,25 +50,25 @@ class Log {
     AnsiBgColors bgColor = AnsiBgColors.normal,
     AnsiMode mode = AnsiMode.normal,
   }) {
-    stdout.writeln(compositionColor(
+    stdout.writeln(appendColor(
       obj,
       tag: tag,
-      fore: forColor,
-      back: bgColor,
+      forColor: forColor,
+      bgColor: bgColor,
       mode: mode,
     ));
   }
 
   /// 叠加色彩
-  static String compositionColor(
+  static String appendColor(
     Object? obj, {
     String? tag,
-    AnsiForColors fore = AnsiForColors.normal,
-    AnsiBgColors back = AnsiBgColors.normal,
+    AnsiForColors forColor = AnsiForColors.normal,
+    AnsiBgColors bgColor = AnsiBgColors.normal,
     AnsiMode mode = AnsiMode.normal,
   }) {
     final contents = [
-      '$_ansiEsc$mode;$back;${fore}m',
+      '$_ansiEsc$mode;$bgColor;${forColor}m',
       [if (tag != null) tag, obj?.toString()].join(': '),
       '$_ansiEsc${AnsiForColors.normal}m',
     ];
