@@ -25,15 +25,15 @@ class Organizer {
   final Notifier? notifier;
 
   /// 发布
-  Future<dynamic> release() async {
+  Future<Object?> release() async {
     await builder.replacer.replace();
     final appFile = await builder.startBuild();
     assert(appFile?.existsSync() == true, '构建失败，请稍后重试');
 
     if (uploader == null || appFile == null) {
-      return;
+      return null;
     }
-    final dynamic result = await uploader!.upload(appFile);
+    final result = await uploader!.upload(appFile);
     if (notifier != null && result is Map<String, dynamic>) {
       assert(result['code'] == 0, result['message']);
       return await notifier!.notify(builder.platform, builder.buildType, result);

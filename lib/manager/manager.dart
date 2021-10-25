@@ -65,7 +65,7 @@ class Manager {
     }
     assert(organizers.isNotEmpty, '请在配置文件设置需要构建的类型');
     for (var organizer in organizers) {
-      final dynamic result = await organizer.release();
+      final result = await organizer.release();
       if (result != null) {
         stdout.writeln('构建成功：$result');
       }
