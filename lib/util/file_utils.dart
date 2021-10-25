@@ -53,7 +53,7 @@ class FileUtils {
     if (size >= kb) {
       return '${(size / kb).toStringAsFixed(2)} KB';
     }
-    return '$size Byte';
+    return '${size.toStringAsFixed(2)} Byte';
   }
 
   /// 复制文件

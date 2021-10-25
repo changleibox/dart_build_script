@@ -96,7 +96,7 @@ class DandelionChatbot {
       url,
       data: FormData.fromMap(data),
       onSendProgress: (count, total) {
-        StdProgress.write(count, total);
+        StdProgress.writeProgress(count, total, '正在上传');
       },
     );
     return response.data as Map<String, dynamic>;
