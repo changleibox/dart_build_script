@@ -14,6 +14,12 @@ class StdProgress {
   static void writeProgress(int count, int total, [String? prefix]) {
     final countStr = FileUtils.convertFukeSize(count).replaceAll(' ', '').replaceAll('Byte', 'B');
     final totalStr = FileUtils.convertFukeSize(total).replaceAll(' ', '').replaceAll('Byte', 'B');
-    stdout.write('\r${prefix ?? ''}(${count * 100 / total}%)：[${('=' * count).padRight(100)}] $countStr/$totalStr');
+    final percent = count * 100 / total;
+    final formattedPercent = '${percent.toStringAsFixed(2)}%';
+    final formattedProgress = ('=' * percent.toInt()).padRight(100);
+    prefix ??= '';
+    stdout.write(
+      '\r$prefix($formattedPercent)：[$formattedProgress] $countStr/$totalStr',
+    );
   }
 }
