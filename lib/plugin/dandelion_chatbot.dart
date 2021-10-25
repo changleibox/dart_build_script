@@ -101,7 +101,7 @@ class DandelionChatbot {
         final formattedPercent = '${percent.toStringAsFixed(2)}%';
         final countStr = FileUtils.convertFukeSize(count).replaceAll(' ', '').replaceAll('Byte', 'B');
         final totalStr = FileUtils.convertFukeSize(total).replaceAll(' ', '').replaceAll('Byte', 'B');
-        StdProgress.writeProgress(count, total, '正在上传($formattedPercent)：', ' $countStr/$totalStr');
+        StdProgress.writeProgress(count, total, '正在上传($formattedPercent)：', ' [$countStr/$totalStr]');
       },
     );
     return response.data as Map<String, dynamic>;

@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dart_build_script/common/paths.dart';
+import 'package:dart_build_script/util/log_cat.dart';
 
 /// 命令行工具
 abstract class IProcess {
@@ -31,7 +32,7 @@ abstract class IProcess {
       runInShell: runInShell,
       mode: mode,
     );
-    stderr.writeln(['command ->', executable, ...arguments].join(' '));
+    Log.w(['command ->', executable, ...arguments].join(' '));
     final stdoutBuffer = StringBuffer();
     process.stdout.transform(systemEncoding.decoder).listen((event) {
       stdout.write(event);
