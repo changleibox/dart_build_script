@@ -21,5 +21,8 @@ class StdProgress {
     stdout.write(
       '\r$prefix($formattedPercent)：[$formattedProgress] $countStr/$totalStr',
     );
+    if (count >= total) {
+      stdout.writeln();
+    }
   }
 }
