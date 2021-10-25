@@ -63,6 +63,9 @@ final String archivePath = path.join(iphoneosPath, '$targetName.xcarchive');
 /// ipa导出路径
 final String ipaExportPath = path.join(iphoneosPath, targetName);
 
+/// buildConfig路径
+const String buildConfigPath = 'lib/system/build_config.dart';
+
 /// iOS配置
 const List<String> xcconfigNames = [
   'Pods-Runner.debug.xcconfig',

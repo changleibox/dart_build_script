@@ -31,6 +31,7 @@ abstract class IProcess {
       runInShell: runInShell,
       mode: mode,
     );
+    stderr.writeln(['->', executable, ...arguments].join(' '));
     final stdoutBuffer = StringBuffer();
     process.stdout.transform(systemEncoding.decoder).listen((event) {
       stdout.write(event);

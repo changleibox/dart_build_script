@@ -6,8 +6,10 @@ import 'dart:io';
 
 import 'package:dart_build_script/common/paths.dart';
 import 'package:dart_build_script/config/configs.dart';
+import 'package:dart_build_script/control/replacer.dart';
 import 'package:dart_build_script/enums/build_platform.dart';
 import 'package:dart_build_script/enums/build_type.dart';
+import 'package:dart_build_script/enums/export_type.dart';
 import 'package:dart_build_script/process/flutter_process.dart';
 import 'package:dart_build_script/process/xcodebuild_process.dart';
 import 'package:path/path.dart' as path;
@@ -26,6 +28,9 @@ abstract class Builder {
 
   /// 构建类型
   BuildType? get buildType;
+
+  /// 导出类型
+  ExportType get exportType;
 
   /// flutter clean
   Future<ProcessResult> clean() {
@@ -54,6 +59,16 @@ abstract class Builder {
 
   /// 开始构建
   Future<File?> startBuild() async {
+    switch (exportType) {
+      case ExportType.export:
+      case ExportType.dandelion:
+        Replacer.debugBuildConfig(buildConfigPath);
+        break;
+      case ExportType.appStore:
+        Replacer.releaseBuildConfig(buildConfigPath);
+        break;
+    }
+
     var result = ProcessResult(0, 0, stdout, stderr);
     if (result.exitCode == 0) {
       final upgradeResult = await pubUpgrade();
@@ -86,6 +101,9 @@ class ApkBuilder extends Builder {
 
   @override
   BuildType? get buildType => buildConfig.buildType;
+
+  @override
+  ExportType get exportType => convertExportType(buildConfig.exportType!)!;
 
   @override
   Future<File?> build() async {
@@ -132,6 +150,9 @@ class IOSBuilder extends Builder {
 
   @override
   BuildType? get buildType => buildConfig.buildType;
+
+  @override
+  ExportType get exportType => convertExportType(buildConfig.exportType!)!;
 
   /// pod update
   Future<ProcessResult> podUpdate({String? libraryName}) async {
