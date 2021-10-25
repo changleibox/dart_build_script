@@ -66,6 +66,12 @@ final String ipaExportPath = path.join(iphoneosPath, targetName);
 /// buildConfig路径
 const String buildConfigPath = 'lib/system/build_config.dart';
 
+/// ios info.plist文件
+const String infoPlistPath = 'ios/Runner/Info.plist';
+
+/// android manifest文件
+const String manifestPath = 'android/app/src/main/AndroidManifest.xml';
+
 /// iOS配置
 const List<String> xcconfigNames = [
   'Pods-Runner.debug.xcconfig',

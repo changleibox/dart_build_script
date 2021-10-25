@@ -62,18 +62,19 @@ class Replacer {
   /// 执行替换
   ///
   /// [filePath]相对[rootPath]路径
-  static void _replace(String filePath, Map<String, String> replaceContents) {
+  static void _replace(String filePath, Map<String, String?> replaceContents) {
     final buildConfig = File(path.join(rootPath, filePath));
-    final lines = List.of(buildConfig.readAsLinesSync());
+    final lines = List<String?>.of(buildConfig.readAsLinesSync());
     for (var i = 0; i < lines.length; i++) {
       final line = lines[i];
       for (var key in replaceContents.keys) {
-        if (RegExp(key).hasMatch(line)) {
-          lines[i] = replaceContents[key]!;
+        if (line != null && RegExp(key).hasMatch(line)) {
+          lines[i] = replaceContents[key];
         }
       }
     }
-    buildConfig.writeAsStringSync(lines.join('\n'), flush: true);
+    final contents = lines.where((element) => element?.isNotEmpty == true).join('\n');
+    buildConfig.writeAsStringSync(contents, flush: true);
   }
 }
 
@@ -84,6 +85,19 @@ class ApkReplacer extends Replacer {
     required BuildType buildType,
     required ExportType exportType,
   }) : super(buildType, exportType);
+
+  static const String _indent = '            ';
+
+  @override
+  Future<void> replace() async {
+    await super.replace();
+    Replacer._replace(infoPlistPath, <String, String?>{
+      _indent + r'android\:name\=\"\.MainActivity\"': <String>[
+        _indent + r'android:name=".MainActivity"',
+        _indent + r'android:screenOrientation="landscape"',
+      ].join('\n'),
+    });
+  }
 }
 
 /// iOS替换
@@ -93,4 +107,14 @@ class IOSReplacer extends Replacer {
     required BuildType buildType,
     required ExportType exportType,
   }) : super(buildType, exportType);
+
+  static const String _indent = '		';
+
+  @override
+  Future<void> replace() async {
+    await super.replace();
+    Replacer._replace(infoPlistPath, <String, String?>{
+      _indent + r'\<string\>UIInterfaceOrientationPortrait\<\/string\>': null,
+    });
+  }
 }
