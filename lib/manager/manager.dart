@@ -18,17 +18,16 @@ class Manager {
   const Manager(this.config);
 
   /// 配置
-  final Config? config;
+  final Config config;
 
   /// 构建
   Future<void> build() async {
-    assert(config != null, '请添加配置文件');
-    final gitConfig = config!.gitConfig;
-    final apkBuildConfig = config!.apkBuildConfig;
-    final iosBuildConfig = config!.iosBuildConfig;
-    final appStoreConfig = config!.appStoreConfig;
-    final pgyConfig = config!.pgyConfig;
-    final dingtalkConfig = config!.dingtalkConfig;
+    final gitConfig = config.gitConfig;
+    final apkBuildConfig = config.apkBuildConfig;
+    final iosBuildConfig = config.iosBuildConfig;
+    final appStoreConfig = config.appStoreConfig;
+    final pgyConfig = config.pgyConfig;
+    final dingtalkConfig = config.dingtalkConfig;
 
     if (gitConfig != null) {
       final gitter = Gitter(gitConfig);
