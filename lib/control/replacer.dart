@@ -91,8 +91,8 @@ class ApkReplacer extends Replacer {
   @override
   Future<void> replace() async {
     await super.replace();
-    Replacer._replace(infoPlistPath, <String, String?>{
-      _indent + r'android\:name\=\"\.MainActivity\"': <String>[
+    Replacer._replace(manifestPath, <String, String?>{
+      r'.*?android:name=".MainActivity"': <String>[
         _indent + r'android:name=".MainActivity"',
         _indent + r'android:screenOrientation="landscape"',
       ].join('\n'),
@@ -108,13 +108,11 @@ class IOSReplacer extends Replacer {
     required ExportType exportType,
   }) : super(buildType, exportType);
 
-  static const String _indent = '		';
-
   @override
   Future<void> replace() async {
     await super.replace();
     Replacer._replace(infoPlistPath, <String, String?>{
-      _indent + r'\<string\>UIInterfaceOrientationPortrait\<\/string\>': null,
+      r'.*?<string>UIInterfaceOrientationPortrait</string>': null,
     });
   }
 }
